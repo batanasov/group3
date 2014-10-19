@@ -13,11 +13,60 @@ and open the template in the editor.
     <body>
         <div class="container-fluid">
             <div class="btn-group-vertical col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button class="btn btn-default">Edno</button>
-                <button class="btn btn-default">Edno</button>
-                <button class="btn btn-default">Edno</button>
-                <button class="btn btn-default">Edno</button>
+                <button class="btn btn-default">Courses</button>
+                <button class="btn btn-default">Venues</button>
+                <button class="btn btn-default">Locations</button>
+                <button class="btn btn-default">Register</button>
+                <button class="btn btn-default">Discussion</button>
             </div>
+            <!--Register form-->
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <div class="input-group-vertical">
+                <span class="input-group-addon">Name</span>
+                <input type="text" class="form-control" placeholder="">
+                <span class="input-group-addon">Surname</span>
+                <input type="text" class="form-control" placeholder="">
+                <span class="input-group-addon">Select course</span>
+                <input type="text" class="form-control">
+              </div>
+                <br/>
+             Please select payment type:
+             <br/>
+            <div class="btn-group">
+                <button class="btn btn-default">Paypal</button>
+                <button class="btn btn-default">Debit card</button>
+            </div>
+             <br/>
+             <br/>
+             For Paypal:
+             <br/>
+             <br/>
+              <div class="input-group">
+                <span class="input-group-addon">Username</span>
+                <input type="text" class="form-control">
+                <span class="input-group-addon">Password</span>
+                <input type="password" class="form-control">
+              </div>
+             <button class="btn btn-success">Submit</button>
+             <br/>
+             <br/>
+             Debit Card:
+             <br/>
+             <br/>
+            <div class="input-group-vertical">
+                <span class="input-group-addon">Name on card</span>
+                <input type="text" class="form-control">
+                <span class="input-group-addon">Card number</span>
+                <input type="password" class="form-control">
+                <span class="input-group-addon">Expiration date</span>
+                <input type="text" class="form-control">
+                <span class="input-group-addon">Security code</span>
+                <input type="password" class="form-control">
+              </div>
+             <button class="btn btn-success">Submit</button>
+             <button class="btn btn-danger">Cancel</button>
+            </div>
+            <!--End of register form-->
         </div>
     </body>
 </html>
