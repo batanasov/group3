@@ -1,0 +1,18 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19-Oct-2014, 10:13:48
+    Author     : Boyan
+*/
+
+#bntLink{
+    width: 20%;
+    min-width: 100px;
+}
+#logo{
+    max-width: 25%;
+    max-height: 25%;
+}

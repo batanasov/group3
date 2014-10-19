@@ -4,13 +4,38 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html ng-app="nmt">
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href="css/custom.css" rel="stylesheet" type="text/css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+        <script src="js/nmt.js" type="text/javascript"></script>
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body ng-controller="mainCtrl">
+        <!--page header-->
+        <div class="page-header container-fluid">
+            <img class="img-responsive col-xs-4 col-sm-4 col-md-4 col-lg-4" src="img/napLogo.png" alt="Logo" id="logo"/>
+            <h1 class="heading col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 col-xs-4 col-sm-4 col-md-4 col-lg-4">NMT</h1>
+        </div>
+        <!--navigation bar -->
+        <nav class="navbar navbar-default col-xs-12 col-sm-12 col-md-12 col-lg-12" role="navigation">
+            <div class="container col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+                <a href="#news" class="btn btn-default" id="bntLink">News</a>
+                <a href="#course" class="btn btn-default" id="bntLink">Courses</a>
+                <a href="#delegates" class="btn btn-default" id="bntLink">Delegates</a>
+                <a href="#admin" class="btn btn-default" id="bntLink">Admin panel</a>
+            </div>
+      </nav>
+        <!--Content-->
+        <div ng-view>
+            
+        </div>
     </body>
 </html>
