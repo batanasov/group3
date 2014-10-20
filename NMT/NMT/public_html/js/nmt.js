@@ -31,3 +31,22 @@ nmt.controller('mainCtrl',function($scope){
 nmt.controller('newsCtrl', function($scope){
     $scope.news = "Current news";
 });
+
+nmt.controller('delegCtrl', function($scope){
+   $scope.classN = "";
+   $scope.classP = "hidden";
+   $scope.classPP = "hidden";
+   $scope.classDC = "hidden";
+   $scope.proceed = function(){
+       $scope.classN = 'hidden';
+       $scope.classP = '';
+   };
+   $scope.paypal = function(){
+       $scope.classP = 'hidden';
+       $scope.classPP = '';
+   };
+   $scope.debitCard = function(){
+       $scope.classP = 'hidden';
+       $scope.classDC = '';
+   };
+});

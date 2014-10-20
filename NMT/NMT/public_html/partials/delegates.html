@@ -20,52 +20,51 @@ and open the template in the editor.
                 <button class="btn btn-default">Discussion</button>
             </div>
             <!--Register form-->
-            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <div class="input-group-vertical">
+            <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <div class="input-group-vertical {{classN}}">
                 <span class="input-group-addon">Name</span>
-                <input type="text" class="form-control" placeholder="">
+                <input type="text" class="form-control" placeholder="" required>
                 <span class="input-group-addon">Surname</span>
-                <input type="text" class="form-control" placeholder="">
+                <input type="text" class="form-control" placeholder="" required>
                 <span class="input-group-addon">Select course</span>
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" required>
+                <button class="btn btn-defautl btn-block" type="submit" ng-click="proceed()">Proceed</button>
               </div>
-                <br/>
-             Please select payment type:
-             <br/>
-            <div class="btn-group">
-                <button class="btn btn-default">Paypal</button>
-                <button class="btn btn-default">Debit card</button>
-            </div>
-             <br/>
-             <br/>
-             For Paypal:
-             <br/>
-             <br/>
-              <div class="input-group">
-                <span class="input-group-addon">Username</span>
-                <input type="text" class="form-control">
-                <span class="input-group-addon">Password</span>
-                <input type="password" class="form-control">
-              </div>
-             <button class="btn btn-success">Submit</button>
-             <br/>
-             <br/>
+                <div class="{{classP}}">
+                    <h2>Please select payment type:</h2>
+                    <br/>
+                   <div class="btn-group col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+                       <button class="btn btn-default" ng-click="paypal()" id="btnLink">Paypal</button>
+                       <button class="btn btn-default" ng-click="debitCard()" id="btnLink">Debit card</button>
+                   </div>
+                </div>
+                <div class="{{classPP}}">
+                    <h2> Paypal details: </h2>
+                     <div class="input-group">
+                       <span class="input-group-addon">Username</span>
+                       <input type="text" class="form-control" required>
+                       <span class="input-group-addon">Password</span>
+                       <input type="password" class="form-control" required>
+                       </div>
+                    <button class="btn btn-success btn-block">Submit</button>
+             </div>
+            <div class="{{classDC}}">       
              Debit Card:
-             <br/>
-             <br/>
-            <div class="input-group-vertical">
-                <span class="input-group-addon">Name on card</span>
-                <input type="text" class="form-control">
-                <span class="input-group-addon">Card number</span>
-                <input type="password" class="form-control">
-                <span class="input-group-addon">Expiration date</span>
-                <input type="text" class="form-control">
-                <span class="input-group-addon">Security code</span>
-                <input type="password" class="form-control">
-              </div>
-             <button class="btn btn-success">Submit</button>
-             <button class="btn btn-danger">Cancel</button>
+                <div class="input-group-vertical">
+                    <span class="input-group-addon">Name on card</span>
+                    <input type="text" class="form-control" required>
+                    <span class="input-group-addon">Card number</span>
+                    <input type="number" class="form-control" required>
+                    <span class="input-group-addon">Expiration date</span>
+                    <input type="date" class="form-control" required>
+                    <span class="input-group-addon">Security code</span>
+                    <input type="number" class="form-control" required>
+                    <button class="btn btn-block btn-success">Submit</button>
+                    <button class="btn btn-block btn-danger">Cancel</button>
+                  </div>
+                 
             </div>
+        </div>
             <!--End of register form-->
         </div>
     </body>
