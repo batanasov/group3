@@ -5,7 +5,7 @@ nmt.config(['$routeProvider',
         $routeProvider.
             when('/course',{
                 templateUrl:'partials/course.html',
-                controller:'courseCtr;'
+                controller:'courseCtrl'
             }).
             when('/news',{
                 templateUrl:'partials/news.html',
@@ -49,4 +49,10 @@ nmt.controller('delegCtrl', function($scope){
        $scope.classP = 'hidden';
        $scope.classDC = '';
    };
+});
+
+nmt.controller('courseCtrl', function($scope,$http){
+    $http.get('js/courses.json').success(function(data){
+        $scope.courses = data;
+    });
 });

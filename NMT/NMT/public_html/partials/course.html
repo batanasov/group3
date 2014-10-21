@@ -11,6 +11,25 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <div class="container-fluid">
+            <select ng-model="query" class="btn btn-default col-xs-offset-1 col-sm-offset-1 col-lg-offset-1 col-xs-12 col-sm-12 col-md-12 col-lg-10">
+            <option value="" disabled>Select Course:</option>
+          <option ng-repeat="course in courses" value="{{course.title}}">{{course.title}}</option>
+        </select> 
+        </div>
+        <br/><br/>
+        <div class="container-fluid">
+            <ul style="list-style-type: none">
+                <li class="jumbotron" ng-repeat="course in courses | filter:query">
+                    <p>{{course.title}}</p>
+                    <p>Description: {{course.description}}</p>
+                    <p>Price: {{course.price}}</p>
+                    <p>Maximum students: {{course.students}}</p>
+                    <p>Data: {{course.data}}</p>
+                    <p>Duration: {{course.duration}}</p>
+                    <p>Status: {{course.status}}</p>
+                </li>
+              </ul>
+        </div>
     </body>
 </html>

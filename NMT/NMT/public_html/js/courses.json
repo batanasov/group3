@@ -1,0 +1,41 @@
+[{
+    "id":"1",
+    "title": "Management of Risk",
+    "description":"Management of Risk covers a wide range of topics, including business continuity management, security, project/program risk management and operational service management. These topics need to be placed into the context of an organization framework for the Management of Risk. Some related topics, such as security are highly specialized and the Management of Risk guidance provides only an overview of such aspects.",
+    "price":"£199.99",
+    "students":"12",
+    "date":"10/11/2014",
+    "duraton":"2 hours",
+    "status":"open"
+},
+{
+    "id":"2",
+    "title": "Change management",
+    "description":"Dealing with change and, more importantly, the impact of change is a high priority for all organizations.Working with Esther Cameron and Mike Green and building on the concepts in their book 'Making Sense of Change Management'    we have developed a series of training courses to help organizations and their people come to terms with these issues.There are four one-day courses comprising the Change Management certification, dealing with the theories of how change impacts on and is affected by: \n * the Individual \n * the Team \n * the Organisation \n * the Change Leader ",
+    "price":"£199.99",
+    "students":"15",
+    "date":"11/11/2014",
+    "duraton":"2 hours",
+    "status":"open"
+},
+{
+    "id":"3",
+    "title": "ITIL",
+    "description":"ITIL training and qualifications are essential if you’re a professional who needs to build and to demonstrate your IT service management abilities. \n * Looking to succeed in IT Service Management? \n * Need to put IT services at the heart of your organisation? \n * Want to improve your contribution to the IT team? ITIL (IT Infrastructure Library) is the international gold standard in IT service management and the ITIL training program underpins this best practice framework. Organisations which aspire to ISO/IEC 20000 will also need to build the ITIL skill sets of their employees. Accredited ITIL training from Focus helps and ensure top quality, high performance IT services are tightly aligned with all areas of your business. ITIL Foundation training provides an overview for all those involved in IT service management. ITIL Intermediate courses give you essential skill sets to optimise specific IT processes like Problem or Release Management.",
+    "price":"£149.99",
+    "students":"20",
+    "date":"12/11/2014",
+    "duraton":"1.5 hours",
+    "status":"open"
+},
+{
+    "id":"4",
+    "title": "Progarmme management",
+    "description":"This course is aimed at anyone who has a basic or limited knowledge of Project Management principles, practices, tools and techniques. It provides a complete and practical understanding of the PMI Body of Knowledge and the implications of applying it to projects of different types and sizes. ",
+    "price":"£149.99",
+    "students":"12",
+    "date":"14/11/2014",
+    "duraton":"1.5 hours",
+    "status":"open"
+}
+]
