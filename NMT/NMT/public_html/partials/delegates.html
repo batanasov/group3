@@ -50,6 +50,7 @@ and open the template in the editor.
                 </div>
             <div class="{{classDC}}">       
                 <h2>Debit Card:</h2>
+                <h3 ng-repeat="course in courses | filter:query">Total amount: {{course.price}}</h3>
                 <div class="input-group-vertical">
                     <span class="input-group-addon">Name on card</span>
                     <input type="text" class="form-control" required>
