@@ -32,22 +32,29 @@ nmt.controller('newsCtrl', function($scope){
     $scope.news = "Current news";
 });
 
-nmt.controller('delegCtrl', function($scope){
-   $scope.classN = "";
+nmt.controller('delegCtrl', function($scope, $http){
+    $http.get('js/courses.json').success(function(data){
+        $scope.courses = data;
+    });
+    
+   $scope.classN = "hidden";
    $scope.classP = "hidden";
    $scope.classPP = "hidden";
    $scope.classDC = "hidden";
+   $scope.register = function(){
+     $scope.classN = "";  
+     $scope.classPP = "hidden";
+     $scope.classDC = "hidden";
+   };
    $scope.proceed = function(){
+       if($scope.option === 'paypal'){
        $scope.classN = 'hidden';
-       $scope.classP = '';
-   };
-   $scope.paypal = function(){
-       $scope.classP = 'hidden';
        $scope.classPP = '';
-   };
-   $scope.debitCard = function(){
-       $scope.classP = 'hidden';
+   }
+   else if($scope.option === 'debitcard'){
+       $scope.classN = 'hidden';
        $scope.classDC = '';
+   }
    };
 });
 

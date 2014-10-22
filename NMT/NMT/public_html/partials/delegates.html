@@ -12,34 +12,34 @@ and open the template in the editor.
     </head>
     <body>
         <div class="container-fluid">
-            <div class="btn-group-vertical col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button class="btn btn-default">Courses</button>
+            <div class="btn-group-vertical col-xs-3 col-sm-2 col-md-2 col-lg-2">
+               <!-- <button class="btn btn-default">Courses</button> -->
                 <button class="btn btn-default">Venues</button>
                 <button class="btn btn-default">Locations</button>
-                <button class="btn btn-default">Register</button>
+                <button class="btn btn-default" ng-click="register()">Register</button>
                 <button class="btn btn-default">Discussion</button>
             </div>
             <!--Register form-->
-            <div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <div class="input-group-vertical {{classN}}">
-                <span class="input-group-addon">Name</span>
-                <input type="text" class="form-control" placeholder="" required>
-                <span class="input-group-addon">Surname</span>
-                <input type="text" class="form-control" placeholder="" required>
-                <span class="input-group-addon">Select course</span>
-                <input type="text" class="form-control" required>
-                <button class="btn btn-defautl btn-block" type="submit" ng-click="proceed()">Proceed</button>
-              </div>
-                <div class="{{classP}}">
-                    <h2>Please select payment type:</h2>
-                    <br/>
-                   <div class="btn-group col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-                       <button class="btn btn-default" ng-click="paypal()" id="btnLink">Paypal</button>
-                       <button class="btn btn-default" ng-click="debitCard()" id="btnLink">Debit card</button>
-                   </div>
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+                <div class="input-group-vertical {{classN}}">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" class="form-control" required>
+                    <span class="input-group-addon">Surname</span>
+                    <input type="text" class="form-control" required>
+                    <span class="input-group-addon">Select course</span>
+                    <select ng-model="query" class="btn btn-default btn-block">
+                        <option ng-repeat="course in courses" value="{{course.title}}">{{course.title + ". Price " + course.price}}</option>
+                    </select> 
+                    <span class="input-group-addon">Select payment type</span>
+                    <select class="btn btn-block btn-default" ng-model="option">
+                        <option class="form-control" value="paypal">Paypal</option>
+                        <option class="form control" value="debitcard">Debit Card</option>
+                    </select>
+                    <button class="btn btn-defautl btn-block" type="submit" ng-click="proceed()">Proceed</button>
                 </div>
                 <div class="{{classPP}}">
                     <h2> Paypal details: </h2>
+                    <h3 ng-repeat="course in courses | filter:query">Total amount: {{course.price}}</h3>
                      <div class="input-group">
                        <span class="input-group-addon">Username</span>
                        <input type="text" class="form-control" required>
@@ -47,9 +47,9 @@ and open the template in the editor.
                        <input type="password" class="form-control" required>
                        </div>
                     <button class="btn btn-success btn-block">Submit</button>
-             </div>
+                </div>
             <div class="{{classDC}}">       
-             Debit Card:
+                <h2>Debit Card:</h2>
                 <div class="input-group-vertical">
                     <span class="input-group-addon">Name on card</span>
                     <input type="text" class="form-control" required>
