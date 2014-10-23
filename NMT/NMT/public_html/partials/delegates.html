@@ -14,8 +14,8 @@ and open the template in the editor.
         <div class="container-fluid">
             <div class="btn-group-vertical col-xs-3 col-sm-2 col-md-2 col-lg-2">
                <!-- <button class="btn btn-default">Courses</button> -->
-                <button class="btn btn-default">Venues</button>
-                <button class="btn btn-default">Locations</button>
+               <!-- <button class="btn btn-default" ng-click="ven()">Venues</button> -->
+               <!-- <button class="btn btn-default">Locations</button> -->
                 <button class="btn btn-default" ng-click="register()">Register</button>
                 <button class="btn btn-default">Discussion</button>
             </div>
@@ -29,6 +29,10 @@ and open the template in the editor.
                     <span class="input-group-addon">Select course</span>
                     <select ng-model="query" class="btn btn-default btn-block">
                         <option ng-repeat="course in courses" value="{{course.title}}">{{course.title + ". Price " + course.price}}</option>
+                    </select> 
+                    <span class="input-group-addon">Select venue</span>
+                    <select class="btn btn-default btn-block">
+                        <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
                     </select> 
                     <span class="input-group-addon">Select payment type</span>
                     <select class="btn btn-block btn-default" ng-model="option">
@@ -67,6 +71,26 @@ and open the template in the editor.
             </div>
         </div>
             <!--End of register form-->
+            <!--venues-->
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 {{classV}}">
+                <select class="btn btn-default btn-block" ng-model="query">
+                    <option value="" disabled>Select Venue:</option>
+                    <option value="">All venues</option>
+                    <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
+                </select> 
+                <br/><br/>
+                <div class="container-fluid">
+                    <ul style="list-style-type: none">
+                        <li class="jumbotron" ng-repeat="venue in venues | filter:query">
+                            <p>{{venue.name}}</p>
+                            <p>Description: {{venue.description}}</p>
+                            <p>Address: {{venue.address}}</p>
+                            <p>Post Code: {{venue.postcode}}</p>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+            <!--end of venues-->
         </div>
     </body>
 </html>

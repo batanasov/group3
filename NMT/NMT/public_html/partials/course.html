@@ -6,31 +6,63 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Courses and venues</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div class="container-fluid">
-        <select ng-model="query" class="btn btn-default col-xs-offset-1 col-sm-offset-1 col-lg-offset-1 col-xs-12 col-sm-12 col-md-12 col-lg-10">
-            <option value="" disabled>Select Course:</option>
-            <option value="">All courses</option>
-            <option ng-repeat="course in courses" value="{{course.title}}">{{course.title}}</option>
-        </select> 
-        </div>
-        <br/><br/>
-        <div class="container-fluid">
-            <ul style="list-style-type: none">
-                <li class="jumbotron" ng-repeat="course in courses | filter:query">
-                    <p>{{course.title}}</p>
-                    <p>Description: {{course.description}}</p>
-                    <p>Price: {{course.price}}</p>
-                    <p>Maximum students: {{course.students}}</p>
-                    <p>Date: {{course.date}}</p>
-                    <p>Duration: {{course.duration}}</p>
-                    <p>Status: {{course.status}}</p>
-                </li>
-              </ul>
+            <div class="btn-group-vertical col-xs-3 col-sm-2 col-md-2 col-lg-2">
+                <button class="btn btn-default" ng-click="cour()">Courses</button>
+                <button class="btn btn-default" ng-click="ven()">Venues</button>
+                <button class="btn btn-default" ng-click="loc()">Locations</button>
+               <!-- <button class="btn btn-default">Locations</button> -->
+            </div>
+            <!--Courses-->
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 {{classC}}">
+                <select ng-model="query" class="btn btn-default btn-block">
+                    <option value="" disabled>Select Course:</option>
+                    <option value="">All courses</option>
+                    <option ng-repeat="course in courses" value="{{course.title}}">{{course.title}}</option>
+                </select> 
+                <br/><br/>
+                <div class="container-fluid">
+                    <ul style="list-style-type: none">
+                        <li class="jumbotron" ng-repeat="course in courses | filter:query">
+                            <p>{{course.title}}</p>
+                            <p>Description: {{course.description}}</p>
+                            <p>Price: {{course.price}}</p>
+                            <p>Maximum students: {{course.students}}</p>
+                            <p>Date: {{course.date}}</p>
+                            <p>Duration: {{course.duration}}</p>
+                            <p>Status: {{course.status}}</p>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+            <!--End of courses-->
+            <!--venues-->
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 {{classV}}">
+                <select class="btn btn-default btn-block" ng-model="query">
+                    <option value="" disabled>Select Venue:</option>
+                    <option value="">All venues</option>
+                    <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
+                </select> 
+                <br/><br/>
+                <div class="container-fluid">
+                    <ul style="list-style-type: none">
+                        <li class="jumbotron" ng-repeat="venue in venues | filter:query">
+                            <p>{{venue.name}}</p>
+                            <p>Description: {{venue.description}}</p>
+                            <p>Address: {{venue.address}}</p>
+                            <p>Post Code: {{venue.postcode}}</p>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+            <!--end of venues-->
+            <!--locations-->
+            <!--end of locations-->
         </div>
     </body>
 </html>

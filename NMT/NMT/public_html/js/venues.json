@@ -1,0 +1,14 @@
+[
+    {
+    "name" : "Edinburgh Merchiston",
+    "description" : "The Merchiston Campus is home to the Faculty of Computing, Engineering and Creative Industries. It is built around the refurbished shell of Merchiston Castle, the family home of John Napier, after whom the University is named. Merchiston Castle is also the ancient seat of Clan Napier.",
+    "address" : "10 Colinton Road, Edinburgh, City of Edinburgh",
+    "postcode" : "EH10 5DT"
+    },
+    {
+     "name" : "Glasgow",
+     "description" : "Located in Glasgow's city center, this venue has great transport links.",
+     "address" : "17 Renfield Street, Glasgow, Strathclyde",
+     "postcode" : "G2 5AH"
+    }
+]
