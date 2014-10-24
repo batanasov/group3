@@ -1,0 +1,35 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Administrators
+ *
+ * @ORM\Table(name="administrators")
+ * @ORM\Entity
+ */
+class Administrators
+{
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="mail", type="boolean", nullable=false)
+     */
+    private $mail = '0';
+
+    /**
+     * @var \Application\Entity\Users
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
+     * })
+     */
+    private $iduser;
+
+
+}

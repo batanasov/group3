@@ -1,0 +1,59 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Subscriptions
+ *
+ * @ORM\Table(name="subscriptions", indexes={@ORM\Index(name="users", columns={"iduser"}), @ORM\Index(name="fk_subscriptions_venues", columns={"idvenue"}), @ORM\Index(name="fk_subscription_course", columns={"idcourse"})})
+ * @ORM\Entity
+ */
+class Subscriptions
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="paymentid", type="integer", nullable=true)
+     */
+    private $paymentid;
+
+    /**
+     * @var \Application\Entity\Venues
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\Venues")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idvenue", referencedColumnName="id")
+     * })
+     */
+    private $idvenue;
+
+    /**
+     * @var \Application\Entity\Users
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
+     * })
+     */
+    private $iduser;
+
+    /**
+     * @var \Application\Entity\Courses
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Application\Entity\Courses")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idcourse", referencedColumnName="id")
+     * })
+     */
+    private $idcourse;
+
+
+}

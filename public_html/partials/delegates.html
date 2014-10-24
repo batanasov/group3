@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="btn-group-vertical col-xs-3 col-sm-2 col-md-2 col-lg-2">
+               <!-- <button class="btn btn-default">Courses</button> -->
+               <!-- <button class="btn btn-default" ng-click="ven()">Venues</button> -->
+               <!-- <button class="btn btn-default">Locations</button> -->
+                <button class="btn btn-default" ng-click="register()">Register</button>
+                <button class="btn btn-default">Discussion</button>
+            </div>
+            <!--Register form-->
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
+                <div class="input-group-vertical {{classN}}">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" class="form-control" required>
+                    <span class="input-group-addon">Surname</span>
+                    <input type="text" class="form-control" required>
+                    <span class="input-group-addon">Select course</span>
+                    <select ng-model="query" class="btn btn-default btn-block">
+                        <option ng-repeat="course in courses" value="{{course.title}}">{{course.title + ". Price " + course.price}}</option>
+                    </select> 
+                    <span class="input-group-addon">Select venue</span>
+                    <select class="btn btn-default btn-block">
+                        <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
+                    </select> 
+                    <span class="input-group-addon">Select payment type</span>
+                    <select class="btn btn-block btn-default" ng-model="option">
+                        <option class="form-control" value="paypal">Paypal</option>
+                        <option class="form control" value="debitcard">Debit Card</option>
+                    </select>
+                    <button class="btn btn-defautl btn-block" type="submit" ng-click="proceed()">Proceed</button>
+                </div>
+                <div class="{{classPP}}">
+                    <h2> Paypal details: </h2>
+                    <h3 ng-repeat="course in courses | filter:query">Total amount: {{course.price}}</h3>
+                     <div class="input-group">
+                       <span class="input-group-addon">Username</span>
+                       <input type="text" class="form-control" required>
+                       <span class="input-group-addon">Password</span>
+                       <input type="password" class="form-control" required>
+                       </div>
+                    <button class="btn btn-success btn-block">Submit</button>
+                </div>
+            <div class="{{classDC}}">       
+                <h2>Debit Card:</h2>
+                <h3 ng-repeat="course in courses | filter:query">Total amount: {{course.price}}</h3>
+                <div class="input-group-vertical">
+                    <span class="input-group-addon">Name on card</span>
+                    <input type="text" class="form-control" required>
+                    <span class="input-group-addon">Card number</span>
+                    <input type="number" class="form-control" required>
+                    <span class="input-group-addon">Expiration date</span>
+                    <input type="date" class="form-control" required>
+                    <span class="input-group-addon">Security code</span>
+                    <input type="number" class="form-control" required>
+                    <button class="btn btn-block btn-success">Submit</button>
+                    <button class="btn btn-block btn-danger">Cancel</button>
+                  </div>
+                 
+            </div>
+        </div>
+            <!--End of register form-->
+            <!--venues-->
+            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 {{classV}}">
+                <select class="btn btn-default btn-block" ng-model="query">
+                    <option value="" disabled>Select Venue:</option>
+                    <option value="">All venues</option>
+                    <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
+                </select> 
+                <br/><br/>
+                <div class="container-fluid">
+                    <ul style="list-style-type: none">
+                        <li class="jumbotron" ng-repeat="venue in venues | filter:query">
+                            <p>{{venue.name}}</p>
+                            <p>Description: {{venue.description}}</p>
+                            <p>Address: {{venue.address}}</p>
+                            <p>Post Code: {{venue.postcode}}</p>
+                        </li>
+                      </ul>
+                </div>
+            </div>
+            <!--end of venues-->
+        </div>
+    </body>
+</html>

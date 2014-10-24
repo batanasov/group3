@@ -1,0 +1,91 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Users
+ *
+ * @ORM\Table(name="users", indexes={@ORM\Index(name="fk_users_title", columns={"title"})})
+ * @ORM\Entity
+ */
+class Users
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="home_address", type="text", nullable=true)
+     */
+    private $homeAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="invoice_address", type="text", nullable=true)
+     */
+    private $invoiceAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstname", type="string", length=45, nullable=false)
+     */
+    private $firstname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastname", type="string", length=45, nullable=false)
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=40, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tel", type="string", length=11, nullable=true)
+     */
+    private $tel;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mobile", type="string", length=11, nullable=true)
+     */
+    private $mobile;
+
+    /**
+     * @var \Application\Entity\Titles
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Titles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="title", referencedColumnName="title")
+     * })
+     */
+    private $title;
+
+
+}

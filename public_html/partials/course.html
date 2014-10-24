@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <h1>{{course.title}}</h1>
+    <a href="#/courses" class="btn btn-default btn-xs">All our courses</a>
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Price</th>
+                <th>Maximum students</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>£{{course.price}}</td>
+                <td>{{course.limit}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <div class="jumbotron" ng-bind-html="course.description"></div>
+    <hr>
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Venue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="session in course.sessions | filter:query">
+                <td>{{session.date}}</td>
+                <td>{{session.duration}}</td>
+                <td><a href="#/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

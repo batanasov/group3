@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <h1>Our courses</h1>
+    <select ng-model="query" class="top btn btn-default btn-block">
+        <option value="" disabled>Select Course:</option>
+        <option value="">All courses</option>
+        <option ng-repeat="course in courses" value="{{course.title}}">{{course.title}}</option>
+    </select> 
+    <ul class="list-unstyled">
+        <li class="jumbotron" ng-repeat="course in courses | filter:query">
+            <h2>{{course.title}}</h2>
+            <table class="table table-bordered table-responsive">
+                <tbody>    
+                    <tr>
+                        <th style="width: 20%; min-width: 200px;">Price</th>
+                        <td>£{{course.price}}</td>
+                    </tr>
+                    <tr>
+                        <th>Maximum students</th>
+                        <td>{{course.limit}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+            <table class="table table-bordered table-responsive table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Venue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="session in course.sessions | filter:query">
+                        <td>{{session.date}}</td>
+                        <td>{{session.duration}}</td>
+                        <td><a href="#/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="#/course/{{course.id}}" class="btn btn-primary">More details</a>
+        </li>
+      </ul>
+</div>

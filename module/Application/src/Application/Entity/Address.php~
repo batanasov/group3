@@ -1,0 +1,91 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Address
+ *
+ * @ORM\Table(name="address", indexes={@ORM\Index(name="fk_adress_titles", columns={"prefix"})})
+ * @ORM\Entity
+ */
+class Address
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
+     */
+    private $firstname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastname", type="string", length=45, nullable=true)
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="company", type="string", length=45, nullable=true)
+     */
+    private $company;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="state", type="string", length=45, nullable=true)
+     */
+    private $state;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postal_code", type="string", length=10, nullable=false)
+     */
+    private $postalCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=45, nullable=false)
+     */
+    private $country = 'United Kingdom';
+
+    /**
+     * @var \Application\Entity\Titles
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Titles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="prefix", referencedColumnName="title")
+     * })
+     */
+    private $prefix;
+
+
+}

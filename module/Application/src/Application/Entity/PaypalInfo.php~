@@ -1,0 +1,74 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PaypalInfo
+ *
+ * @ORM\Table(name="paypal_info", indexes={@ORM\Index(name="fk_paypal_payments", columns={"paymentId"})})
+ * @ORM\Entity
+ */
+class PaypalInfo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="buyer_email", type="string", length=255, nullable=false)
+     */
+    private $buyerEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="txnid", type="string", length=30, nullable=false)
+     */
+    private $txnid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mc_gross", type="string", length=6, nullable=false)
+     */
+    private $mcGross;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="paymentstatus", type="string", length=15, nullable=false)
+     */
+    private $paymentstatus;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="custom", type="string", length=255, nullable=false)
+     */
+    private $custom;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="paymentId", type="integer", nullable=false)
+     */
+    private $paymentid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="receiver_email", type="string", length=255, nullable=false)
+     */
+    private $receiverEmail;
+
+
+}

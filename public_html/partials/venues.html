@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <h1>Our venues</h1>
+    <select class="btn btn-default btn-block top" ng-model="query">
+        <option value="" disabled>Select Venue:</option>
+        <option value="">All venues</option>
+        <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
+    </select> 
+    <ul class="list-unstyled">
+        <li class="jumbotron" ng-repeat="venue in venues | filter:query">
+            <h2>{{venue.name}}</h2>
+            
+            <p class="lead">Currently hosting {{venue.sessions}} courses.</p>
+            <p><a href="#/venue/{{venue.id}}" class="btn btn-primary btn-small">More details</a></p>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,59 @@
+<?php
+
+namespace Application\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Lessons
+ *
+ * @ORM\Table(name="lessons", indexes={@ORM\Index(name="course", columns={"courseid"}), @ORM\Index(name="fk_lessons_venues", columns={"idvenues"})})
+ * @ORM\Entity
+ */
+class Lessons
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_start", type="datetime", nullable=false)
+     */
+    private $dateStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_end", type="datetime", nullable=false)
+     */
+    private $dateEnd;
+
+    /**
+     * @var \Application\Entity\Courses
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Courses")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="courseid", referencedColumnName="id")
+     * })
+     */
+    private $courseid;
+
+    /**
+     * @var \Application\Entity\Venues
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Venues")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idvenues", referencedColumnName="id")
+     * })
+     */
+    private $idvenues;
+
+
+}
