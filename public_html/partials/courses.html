@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="session in course.sessions | filter:query">
+                    <tr ng-repeat="session in course.sessions">
                         <td>{{session.date}}</td>
                         <td>{{session.duration}}</td>
                         <td><a href="#/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
