@@ -1,37 +1,57 @@
-var nmt = angular.module('nmt',['ngRoute']);
+var nmt = angular.module('nmt',['ngRoute', 'ngCookies', 'ngAnimate', 'angular-loading-bar']);
 
-nmt.factory('httpInterceptor',['$q','$location',function($q,$location){
-  return {
-    response: function(response){
-      return promise.then(
-        function success(response) {
-        return response;
-      },
-      function error(response) {
-        if(response.status === 401){
-          $location.path('/signin');
-          return $q.reject(response);
+nmt.factory('httpInterceptor', ['$location', '$injector', '$q', '$cookies', function ($location, $injector, $q, $cookies) {
+    return {
+        'request': function (config) {
+            var bearer = $cookies.authBearerToken;
+            //injected manually to get around circular dependency problem.
+            //var AuthService = $injector.get('Auth');
+
+            //if (!AuthService.isAuthenticated()) {
+                //$location.path('/login');
+            //} else {
+            //    //add session_id as a bearer token in header of all outgoing HTTP requests.
+            //    var currentUser = AuthService.getCurrentUser();
+            //    if (currentUser !== null) {
+            //        var sessionId = AuthService.getCurrentUser().sessionId;
+            //        if (sessionId) {
+            //            config.headers.Authorization = 'Bearer ' + sessionId;
+            //        }
+            //    }
+            //}
+
+            //add headers
+            return config;
+        },
+        'responseError': function (rejection) {
+            if (rejection.status === 401) {
+
+                //injected manually to get around circular dependency problem.
+                var AuthService = $injector.get('Auth');
+
+                //if server returns 401 despite user being authenticated on app side, it means session timed out on server
+                if (AuthService.isAuthenticated()) {
+                    AuthService.appLogOut();
+                }
+                $location.path('/login');
+                return $q.reject(rejection);
+            }
         }
-        else{
-          return $q.reject(response); 
-        }
-      });
-    }
-  };
+    };
 }]);
 
-nmt.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
-    $httpProvider.responseInterceptors.push();
+nmt.config(['$routeProvider', '$httpProvider', '$locationProvider', function($routeProvider, $httpProvider, $locationProvider) {
+    $httpProvider.interceptors.push('httpInterceptor');
     $routeProvider.
-        when('/courses',{
+        when('/courses', {
             templateUrl:'partials/courses.html',
             controller:'coursesCtrl'
         }). 
-        when('/course/:courseId',{
+        when('/course/:courseId', {
             templateUrl:'partials/course.html',
             controller:'courseCtrl'
         }). 
-        when('/venues',{
+        when('/venues', {
             templateUrl:'partials/venues.html',
             controller:'venuesCtrl'
         }).
@@ -39,36 +59,35 @@ nmt.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpPro
             templateUrl:'partials/venue.html',
             controller:'venueCtrl'
         }).
-        when('/news',{
+        when('/news', {
             templateUrl:'partials/news.html',
             controller:'newsCtrl'
         }).
-        when('/delegates',{
+        when('/delegates', {
             templateUrl:'partials/delegates.html',
             controller:'delegCtrl'
         }).
-        when('/admin',{
+        when('/admin', {
             templateUrl:'partials/admin.html',
             controller:'adminCtrl'
         }).
         otherwise({
             redirectTo:'/news'
         });
+    $locationProvider
+        .html5Mode(true)
+        .hashPrefix('!');
 }]);
 
 nmt.controller('mainCtrl',['$scope', function($scope){
     
 }]);
 
-nmt.controller('newsCtrl', ['$scope', function($scope){
-    $scope.news = "Current news";
-}]);
-
 nmt.controller('delegCtrl', ['$scope', '$http', function($scope, $http){
-    $http.get('js/courses.json').success(function(data){
+    $http.get('api/courses').success(function(data){
         $scope.courses = data;
     });
-    $http.get('js/venues.json').success(function(data){
+    $http.get('api/venues').success(function(data){
         $scope.venues = data;
     });
     

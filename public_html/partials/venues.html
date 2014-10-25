@@ -8,9 +8,8 @@
     <ul class="list-unstyled">
         <li class="jumbotron" ng-repeat="venue in venues | filter:query">
             <h2>{{venue.name}}</h2>
-            
             <p class="lead">Currently hosting {{venue.sessions}} courses.</p>
-            <p><a href="#/venue/{{venue.id}}" class="btn btn-primary btn-small">More details</a></p>
+            <p><a href="venue/{{venue.id}}" class="btn btn-primary btn-small">More details</a></p>
         </li>
     </ul>
 </div>

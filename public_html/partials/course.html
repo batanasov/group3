@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h1>{{course.title}}</h1>
-    <a href="#/courses" class="btn btn-default btn-xs">All our courses</a>
+    <a href="courses" class="btn btn-default btn-xs">All our courses</a>
     <table class="table table-bordered table-responsive">
         <thead>
             <tr>
@@ -30,7 +30,7 @@
             <tr ng-repeat="session in course.sessions | filter:query">
                 <td>{{session.date}}</td>
                 <td>{{session.duration}}</td>
-                <td><a href="#/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
+                <td><a href="venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
             </tr>
         </tbody>
     </table>

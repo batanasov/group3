@@ -25,12 +25,27 @@ return array(
     'router' => array(
         'routes' => array(
             'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '[:resource[/:id]]',
+                            'constraints' => array(
+                                'resource'  => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'        => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
                     ),
                 ),
             ),
