@@ -69,7 +69,7 @@ class VenuesResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->repository->find($id);
     }
 
     /**
@@ -80,6 +80,19 @@ class VenuesResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
+        if(isset($params->venue)) {
+            $courses = $this->repository->findAll();
+            return array_values(array_filter(array_map(
+                function ($course) use ($params) {
+                    foreach ($course->getSessions() as $session) {
+                        if($session->getVenue()->getId() == $params->venue) {
+                            return $course;
+                        }
+                    }
+                },
+                $courses
+            )));
+        }
         return $this->repository->findAll();
     }
 

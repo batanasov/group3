@@ -11,8 +11,9 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="courses">
             <h2>Courses</h2>
-            <a href="" class="btn btn-primary top">Add a course</a>
-            <select ng-model="coursesQuery" class="btn btn-default" ng-options="course.title for course in courses"><option></option></select>
+            <a href="" class="btn btn-primary btn-xs top">Add a course</a>
+            <label for="coursesQuery">Filter</label>
+            <select ng-model="coursesQuery" id="coursesQuery" ng-options="course.title for course in courses"><option></option></select>
             <table class="table table-bordered table-responsive table-striped">
                 <thead>
                     <tr>
@@ -28,7 +29,7 @@
                         <td>{{item.price}}</td>
                         <td>
                             <ul ng-repeat="session in item.sessions">
-                                <li><a>{{session.venue.name}}, {{session.date}}</a></li>
+                                <li><a href="/admin/venue/{{session.venue.id}}">{{session.venue.name}}, {{session.date}}</a></li>
                             </ul>
                         </td>
                         <td>
@@ -43,8 +44,9 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="venues">
             <h2>Venues</h2>
-            <a href="" class="btn btn-primary top">Add a venue</a>
-            <select ng-model="venuesQuery" class="btn btn-default" ng-options="venue.name for venue in venues"><option></option></select>
+            <a href="" class="btn btn-primary btn-xs top">Add a venue</a>
+            <label for="coursesQuery">Filter:</label>
+            <select ng-model="venuesQuery" ng-options="venue.name for venue in venues"><option></option></select>
             <table class="table table-bordered table-responsive table-striped">
                 <thead>
                     <tr>
@@ -61,7 +63,7 @@
                         <td>{{item.sessions}}</td>
                         <td>
                             <div class="btn-group btn-group-xs">
-                                <a href="" class="btn btn-default">Edit</a>
+                                <a href="/admin/venue/{{item.id}}" class="btn btn-default">View / Edit</a>
                                 <a href="" class="btn btn-danger">Delete</a>
                             </div>
                         </td>
@@ -71,8 +73,9 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="news">
             <h2>News</h2>
-            <a href="" class="btn btn-primary top">Add a news</a>
-            <select ng-model="query" class="btn btn-default" ng-options="item.title as item.title group by item.date for item in news"><option></option></select>
+            <a href="" class="btn btn-primary btn-xs top">Add a news</a>
+            <label for="coursesQuery">Filter:</label>
+            <select ng-model="query" ng-options="item.title as item.title group by item.date for item in news"><option></option></select>
             <table class="table table-bordered table-responsive table-striped">
                 <thead>
                     <tr>
@@ -101,7 +104,7 @@
 </div>
 <script>
     $('#tabs a').click(function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-    })
+        e.preventDefault();
+        $(this).tab('show');
+    });
 </script>

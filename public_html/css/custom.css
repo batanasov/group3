@@ -63,3 +63,12 @@ footer ul#footer-links li {
 h3 {
     font-size: 1.5rem;
 }
+
+.editable-wrap, .editable-controls {
+    width: 100%;
+}
+
+textarea.editable-input.editable-input.editable-has-buttons {
+    width: 90%;
+    min-height: 200px;
+}

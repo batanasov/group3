@@ -72,7 +72,9 @@ return array(
                 0 => 'GET',
                 1 => 'POST',
             ),
-            'collection_query_whitelist' => array(),
+            'collection_query_whitelist' => array(
+                0 => 'venue',
+            ),
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => 'NapierManagementTrainingAdmin\\V1\\Rest\\Courses\\CoursesEntity',

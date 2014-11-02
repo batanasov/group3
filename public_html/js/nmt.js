@@ -1,4 +1,8 @@
-var nmt = angular.module('nmt',['ngRoute', 'ngCookies', 'ngAnimate', 'angular-loading-bar','toaster']);
+var nmt = angular.module('nmt',['ngRoute', 'ngCookies', 'ngAnimate', 'textAngular', 'angular-loading-bar','toaster','xeditable']);
+
+nmt.run(function(editableOptions) {
+    editableOptions.theme = 'bs3';
+});
 
 nmt.factory('httpInterceptor', ['$location', '$q', '$cookies', function ($location, $q, $cookies) {
     return {
@@ -67,6 +71,10 @@ nmt.config(['$routeProvider', '$httpProvider', '$locationProvider', function($ro
         when('/admin/dashboard', {
             templateUrl:'partials/admin-dashboard.html',
             controller:'adminDashboardCtrl'
+        }).
+        when('/admin/venue/:venueId', {
+            templateUrl:'partials/admin-venue.html',
+            controller:'adminVenueCtrl'
         }).
         otherwise({
             redirectTo:'/home'
@@ -359,6 +367,21 @@ nmt.controller('adminDashboardCtrl', ['$rootScope', '$scope', '$http', '$sce', '
         for (var i = 0; i < data.length; i++) {
             data[i].content = $sce.trustAsHtml(data[i].content);
         }
+        $scope.courses = data;
+    });
+}]);
+
+nmt.controller('adminVenueCtrl', ['$scope', '$http', '$sce', '$routeParams', function($scope, $http, $sce, $routeParams) {
+    $scope.courses = [];
+    $http.get('api/admin/venues/'+$routeParams.venueId).success(function(data){
+        data.description = $sce.trustAsHtml(data.description);
+        data.address = $sce.trustAsHtml(data.address);
+        var address = ''+data.address;
+        address = address.replace(/ /g, '+');
+        $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=15&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
+        $scope.venue = data;
+    });
+    $http.get('api/admin/courses?venue='+$routeParams.venueId).success(function(data){
         $scope.courses = data;
     });
 }]);
