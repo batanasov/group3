@@ -263,7 +263,7 @@ nmt.controller('venueCtrl', ['$scope', '$http', '$sce', '$routeParams', function
         data.address = $sce.trustAsHtml(data.address);
         var address = ''+data.address;
         address = address.replace(/ /g, '+');
-        $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=15&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
+        $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=13&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
         $scope.venue = data;
     });
     $http.get('api/courses?venue='+$routeParams.venueId).success(function(data){
@@ -373,15 +373,30 @@ nmt.controller('adminDashboardCtrl', ['$rootScope', '$scope', '$http', '$sce', '
 
 nmt.controller('adminVenueCtrl', ['$scope', '$http', '$sce', '$routeParams', function($scope, $http, $sce, $routeParams) {
     $scope.courses = [];
-    $http.get('api/admin/venues/'+$routeParams.venueId).success(function(data){
+    $http.get('/api/admin/venues/'+$routeParams.venueId).success(function(data){
         data.description = $sce.trustAsHtml(data.description);
         data.address = $sce.trustAsHtml(data.address);
         var address = ''+data.address;
         address = address.replace(/ /g, '+');
-        $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=15&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
+        $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=13&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
         $scope.venue = data;
     });
     $http.get('api/admin/courses?venue='+$routeParams.venueId).success(function(data){
         $scope.courses = data;
     });
+    
+    $scope.patchVenue = function(field, form) {
+        var values = {};
+        values[field] = $scope.venue[field];
+        $http.patch(
+            '/api/admin/venues/'+$routeParams.venueId,
+            values
+        ).success(function(data) {
+            if(field === 'address') {
+                var address = ''+$scope.venue[field];
+                address = address.replace(/ /g, '+');
+                $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=13&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
+            }
+        });
+    };
 }]);

@@ -3,6 +3,7 @@ namespace NapierManagementTrainingAdmin\V1\Rest\Venues;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use ZF\ContentNegotiation\ViewModel;
 
 class VenuesResource extends AbstractResourceListener
 {
@@ -105,7 +106,16 @@ class VenuesResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $venue = $this->repository->find($id);
+        $properties = array_keys(get_object_vars($data));
+        foreach ($properties as $property) {
+            $setterName = 'set'.ucfirst($property);
+            if (method_exists($venue, $setterName)) {
+                $venue->$setterName($data->$property);
+            }
+        }
+        $this->em->flush();
+        return new ViewModel();
     }
 
     /**
