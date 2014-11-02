@@ -7,6 +7,6 @@ class NewsResourceFactory
     {
         $em = $services->get('Doctrine\ORM\EntityManager');
         $repository = $em->getRepository('Application\Entity\News');
-        return new NewsResource($repository);
+        return new NewsResource($em, $repository);
     }
 }

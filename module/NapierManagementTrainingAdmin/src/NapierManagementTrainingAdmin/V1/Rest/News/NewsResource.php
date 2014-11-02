@@ -4,7 +4,8 @@ namespace NapierManagementTrainingAdmin\V1\Rest\News;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use Application\Repository\NewsRepository;
-
+use ZF\ContentNegotiation\ViewModel;
+use DateTime;
 class NewsResource extends AbstractResourceListener
 {
     /**
@@ -12,14 +13,15 @@ class NewsResource extends AbstractResourceListener
      * @var NewsRepository 
      */
     private $repository;
-    
+    private $em;
     /**
      * 
      * @param NewsRepository $repository
      */
-    public function __construct(NewsRepository $repository)
+    public function __construct($em, NewsRepository $repository)
     {
         $this->repository = $repository;
+        $this->em = $em;
     }
     
     /**
@@ -86,7 +88,18 @@ class NewsResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        /** @var $news \Application\Entity\News */
+        $news = $this->repository->find($id);
+        $properties = array_keys(get_object_vars($data));
+        foreach ($properties as $property) {
+            $setterName = 'set'.ucfirst($property);
+            if (method_exists($news, $setterName)) {
+                $news->$setterName($data->$property);
+            }
+        }
+        $news->setDate(new DateTime());
+        $this->em->flush();
+        return new ViewModel();
     }
 
     /**

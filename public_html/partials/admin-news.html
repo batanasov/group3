@@ -1,0 +1,8 @@
+<div class="container" ng-controller="adminNewsCtrl">
+    <a href="/admin/dashboard" class="btn btn-default top">Back to admin dashboard</a>
+    <h1><a href="#" editable-text="news.title" onaftersave="patchNews('title', this);">{{news.title}}</a></h1>
+    <div class="jumbotron">
+    <a href="#" editable-textarea="news.content" onaftersave="patchNews('content', this);">
+        <div ng-bind-html="news.content || 'No content yet'"></div>
+    </a></div>
+</div>

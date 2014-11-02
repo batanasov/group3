@@ -76,6 +76,18 @@ nmt.config(['$routeProvider', '$httpProvider', '$locationProvider', function($ro
             templateUrl:'partials/admin-venue.html',
             controller:'adminVenueCtrl'
         }).
+        when('/admin/news/:newsId', {
+            templateUrl:'partials/admin-news.html',
+            controller:'adminNewsCtrl'
+        }).        
+        when('/admin/course/:courseId', {
+            templateUrl:'partials/admin-course.html',
+            controller:'adminCourseCtrl'
+        }).
+        when('/admin/session/:sessionId', {
+            templateUrl:'partials/admin-session.html',
+            controller:'adminSessionCtrl'
+        }).        
         otherwise({
             redirectTo:'/home'
         });
@@ -369,6 +381,20 @@ nmt.controller('adminDashboardCtrl', ['$rootScope', '$scope', '$http', '$sce', '
         }
         $scope.courses = data;
     });
+    
+    $scope.addItem = function(type, objectName) {
+        
+    };
+    
+    $scope.remove = function(type, value) {
+        var collection = $scope[type].slice(0);
+        /**
+         * @todo add api call 
+         */
+        $scope[type] = collection.filter(function(item) {
+            return item.id !== value;
+        });
+    };
 }]);
 
 nmt.controller('adminVenueCtrl', ['$scope', '$http', '$sce', '$routeParams', function($scope, $http, $sce, $routeParams) {
@@ -398,5 +424,20 @@ nmt.controller('adminVenueCtrl', ['$scope', '$http', '$sce', '$routeParams', fun
                 $scope.mapUrl = $sce.trustAsResourceUrl('https://maps.google.com/maps/api/staticmap?language=en&center=&zoom=13&size=1500x200&format=png32&maptype=roadmap&markers=' + address + '&sensor=false');
             }
         });
+    };
+}]);
+
+nmt.controller('adminNewsCtrl', ['$scope', '$http', '$sce', '$routeParams', function($scope, $http, $sce, $routeParams) {
+    $http.get('api/admin/news/'+$routeParams.newsId).success(function(data){
+        data.content = $sce.trustAsHtml(data.content);
+        $scope.news = data;
+    });
+    $scope.patchNews = function(field, form) {
+        var values = {};
+        values[field] = $scope.news[field];
+        $http.patch(
+            '/api/admin/news/'+$routeParams.newsId,
+            values
+        ).success(function(data){});
     };
 }]);
