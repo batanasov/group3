@@ -3,14 +3,15 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * Titles
  *
  * @ORM\Table(name="titles")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Repository\TitleRepository")
  */
-class Titles
+class Titles implements JsonSerializable
 {
     /**
      * @var string
@@ -42,4 +43,9 @@ class Titles
         $this->title = $title;
         return $this;
     }
+
+    public function jsonSerialize() {
+        return get_object_vars($this);
+    }
+
 }

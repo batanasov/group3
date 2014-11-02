@@ -4,6 +4,8 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Courses
  *
@@ -87,8 +89,6 @@ class Sessions implements JsonSerializable
      */
     private $dateEnd;
     
-    
-
     /**
      * Get id
      *
@@ -98,7 +98,18 @@ class Sessions implements JsonSerializable
     {
         return $this->id;
     }
+    
+    /**
+     *
+     * @var type 
+     * @ORM\ManyToMany(targetEntity="Application\Entity\Users", mappedBy="sessions")
+     */
+    private $users;
 
+    public function __construct() {
+        $this->users = new ArrayCollection();
+    }
+    
     /**
      * 
      */
@@ -106,7 +117,8 @@ class Sessions implements JsonSerializable
     {   
         $values = get_object_vars($this);
         $values['date'] = "From {$values['dateStart']->format('d/m/Y')} to {$values['dateEnd']->format('d/m/Y')}";
-        $values['duration'] = $values['dateStart']->diff($values['dateEnd'])->format('%d days');
+        $values['duration'] = $values['dateStart']->diff($values['dateEnd'])->format('%d days') + 1;
+        $values['users'] = count($this->users);
         unset($values['dateStart']);
         unset($values['dateEnd']);
         unset($values['course']);

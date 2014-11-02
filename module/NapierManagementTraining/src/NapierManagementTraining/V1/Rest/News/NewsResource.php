@@ -75,7 +75,10 @@ class NewsResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return $this->repository->findAll();
+        if(isset($params['limit']) and $params['limit'] > 0) {
+            return $this->repository->findBy([], ['date'=>'DESC'], $params['limit']);
+        }
+        return $this->repository->findBy([], ['date'=>'DESC']);
     }
 
     /**

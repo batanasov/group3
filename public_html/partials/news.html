@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container">
     <h1>Current news</h1>
     <ul class="list-unstyled">
         <li class="jumbotron" ng-repeat="item in news | filter:query">
-            <h2>{{item.title}} <small>by {{item.user.firstname}} {{item.user.lastname}}</small></h2>
+            <h2>{{item.title}} <small>by {{item.user.firstname}} {{item.user.lastname}}, {{item.date}}</small></h2>
             <div ng-bind-html="item.content"></div>
         </li>
     </ul>

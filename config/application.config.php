@@ -8,7 +8,7 @@ return array(
     'modules' => array(
         'DoctrineModule',
         'DoctrineORMModule',
-	'DoctrineDataFixtureModule',
+        'DoctrineDataFixtureModule',
         'Application',
         'ZF\\DevelopmentMode',
         'ZF\\Apigility',
@@ -25,7 +25,8 @@ return array(
         'ZF\\Rest',
         'ZF\\Rpc',
         'ZF\\Versioning',
-        'NapierManagementTraining'
+        'NapierManagementTraining',
+        'NapierManagementTrainingAdmin'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

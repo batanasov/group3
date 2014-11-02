@@ -1,15 +1,22 @@
-        <div class="container-fluid">
-            <div class="btn-group-vertical col-xs-3 col-sm-3 col-md-3 col-lg-3" style="display: none;">
-                <button class="btn btn-default">Edno</button>
-                <button class="btn btn-default">Edno</button>
-                <button class="btn btn-default">Edno</button>
-                <button class="btn btn-default">Edno</button>
+<div class="container">
+    <h1>Administration log in</h1>
+    <form class="form-horizontal" ng-submit="submit()" id="login" role="form">
+        <div class="form-group">
+            <label for="title" class="col-sm-offset-2 col-sm-2 control-label sr-only">Username</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" placeholder="Username" name="username" id="username" ng-model="formData.username" required>
             </div>
-    
-            <form class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 col-xs-5 col-sm-5 col-md-5 col-lg-5" role="form">
-              <h2 class="form-signin-heading">Please log in</h2>
-              <input type="text" class="form-control" placeholder="Username" required>
-              <input type="password" class="form-control" placeholder="Password" required>
-              <button class="btn btn-lg btn-primary btn-block">Sign in</button>
-            </form>
         </div>
+        <div class="form-group">
+            <label for="title" class="col-sm-offset-2 col-sm-2 control-label sr-only">Password</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" placeholder="Password" name="password" id="password" ng-model="formData.password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-4 text-center">
+                <input type="submit" class="btn btn-lg btn-primary" value="Sign in">
+            </div>
+        </div>
+    </form>
+</div>

@@ -7,6 +7,21 @@ use ZF\Rest\AbstractResourceListener;
 class SessionsResource extends AbstractResourceListener
 {
     /**
+     *
+     * @var  
+     */
+    private $repository;
+    
+    /**
+     * 
+     * @param mixed $repository
+     */
+    public function __construct($repository)
+    {
+        $this->repository = $repository;
+    }
+    
+    /**
      * Create a resource
      *
      * @param  mixed $data
@@ -58,7 +73,7 @@ class SessionsResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return $this->repository->findAll();
     }
 
     /**

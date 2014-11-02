@@ -4,6 +4,7 @@ namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Users
@@ -13,6 +14,11 @@ use JsonSerializable;
  */
 class Users implements JsonSerializable
 {
+    public function __construct()
+    {
+        $this->sessions = new ArrayCollection();
+    }
+    
     /**
      * @var integer
      *
@@ -25,16 +31,9 @@ class Users implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="home_address", type="text", nullable=true)
+     * @ORM\Column(name="address", type="text", nullable=true)
      */
-    private $homeAddress;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="invoice_address", type="text", nullable=true)
-     */
-    private $invoiceAddress;
+    private $address;
 
     /**
      * @var string
@@ -53,13 +52,6 @@ class Users implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=40, nullable=true)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
@@ -67,16 +59,9 @@ class Users implements JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="tel", type="string", length=11, nullable=true)
+     * @ORM\Column(name="tel", type="string", length=45, nullable=true)
      */
     private $tel;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mobile", type="string", length=11, nullable=true)
-     */
-    private $mobile;
 
     /**
      * @var \Application\Entity\Titles
@@ -88,7 +73,12 @@ class Users implements JsonSerializable
      */
     private $title;
 
-
+    /**
+     *
+     * @var type 
+     * @ORM\ManyToMany(targetEntity="Application\Entity\Sessions", inversedBy="users")
+     */
+    private $sessions;
 
     /**
      * Get id
@@ -101,49 +91,26 @@ class Users implements JsonSerializable
     }
 
     /**
-     * Set homeAddress
+     * Set address
      *
-     * @param string $homeAddress
+     * @param string $address
      * @return Users
      */
-    public function setHomeAddress($homeAddress)
+    public function setAddress($address)
     {
-        $this->homeAddress = $homeAddress;
+        $this->address = $address;
 
         return $this;
     }
 
     /**
-     * Get homeAddress
+     * Get address
      *
      * @return string 
      */
-    public function getHomeAddress()
+    public function getAddress()
     {
-        return $this->homeAddress;
-    }
-
-    /**
-     * Set invoiceAddress
-     *
-     * @param string $invoiceAddress
-     * @return Users
-     */
-    public function setInvoiceAddress($invoiceAddress)
-    {
-        $this->invoiceAddress = $invoiceAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get invoiceAddress
-     *
-     * @return string 
-     */
-    public function getInvoiceAddress()
-    {
-        return $this->invoiceAddress;
+        return $this->address;
     }
 
     /**
@@ -193,29 +160,6 @@ class Users implements JsonSerializable
     }
 
     /**
-     * Set password
-     *
-     * @param string $password
-     * @return Users
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string 
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Set email
      *
      * @param string $email
@@ -262,29 +206,6 @@ class Users implements JsonSerializable
     }
 
     /**
-     * Set mobile
-     *
-     * @param string $mobile
-     * @return Users
-     */
-    public function setMobile($mobile)
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
-    /**
-     * Get mobile
-     *
-     * @return string 
-     */
-    public function getMobile()
-    {
-        return $this->mobile;
-    }
-
-    /**
      * Set title
      *
      * @param \Application\Entity\Titles $title
@@ -307,6 +228,12 @@ class Users implements JsonSerializable
         return $this->title;
     }
 
+    public function addSession(Sessions $session)
+    {
+        $this->sessions->add($session);
+        return $this;
+    }
+    
     public function jsonSerialize()
     {
         return get_object_vars($this);

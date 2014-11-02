@@ -47,6 +47,18 @@ return array(
                             ),
                         ),
                     ),
+                    'admin' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => 'admin/[:resource[/:id]]',
+                            'constraints' => array(
+                                'resource'  => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'        => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
                 ),
             ),
             // The following is a route to simplify getting started creating

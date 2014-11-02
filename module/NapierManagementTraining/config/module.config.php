@@ -38,6 +38,25 @@ return array(
                     ),
                 ),
             ),
+            'napier-management-training.rest.titles' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/titles',
+                    'defaults' => array(
+                        'controller' => 'NapierManagementTraining\\V1\\Rest\\Titles\\Controller',
+                    ),
+                ),
+            ),
+            'napier-management-training.rpc.registration' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/registration',
+                    'defaults' => array(
+                        'controller' => 'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller',
+                        'action' => 'registration',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
@@ -46,6 +65,8 @@ return array(
             1 => 'napier-management-training.rest.venues',
             2 => 'napier-management-training.rest.news',
             3 => 'napier-management-training.rest.sessions',
+            4 => 'napier-management-training.rest.titles',
+            5 => 'napier-management-training.rpc.registration',
         ),
     ),
     'service_manager' => array(
@@ -54,6 +75,7 @@ return array(
             'NapierManagementTraining\\V1\\Rest\\Venues\\VenuesResource' => 'NapierManagementTraining\\V1\\Rest\\Venues\\VenuesResourceFactory',
             'NapierManagementTraining\\V1\\Rest\\News\\NewsResource' => 'NapierManagementTraining\\V1\\Rest\\News\\NewsResourceFactory',
             'NapierManagementTraining\\V1\\Rest\\Sessions\\SessionsResource' => 'NapierManagementTraining\\V1\\Rest\\Sessions\\SessionsResourceFactory',
+            'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesResource' => 'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesResourceFactory',
         ),
     ),
     'zf-rest' => array(
@@ -64,15 +86,13 @@ return array(
             'collection_name' => 'courses',
             'entity_http_methods' => array(
                 0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
             ),
-            'collection_query_whitelist' => array(),
+            'collection_query_whitelist' => array(
+                0 => 'venue',
+            ),
             'page_size' => '99999999',
             'page_size_param' => null,
             'entity_class' => 'NapierManagementTraining\\V1\\Rest\\Courses\\CoursesEntity',
@@ -86,13 +106,9 @@ return array(
             'collection_name' => 'venues',
             'entity_http_methods' => array(
                 0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
             ),
             'collection_query_whitelist' => array(),
             'page_size' => '999999',
@@ -108,17 +124,15 @@ return array(
             'collection_name' => 'news',
             'entity_http_methods' => array(
                 0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
             ),
-            'collection_query_whitelist' => array(),
+            'collection_query_whitelist' => array(
+                0 => 'limit',
+            ),
             'page_size' => '999999',
-            'page_size_param' => null,
+            'page_size_param' => 'limit',
             'entity_class' => 'NapierManagementTraining\\V1\\Rest\\News\\NewsEntity',
             'collection_class' => 'NapierManagementTraining\\V1\\Rest\\News\\NewsCollection',
             'service_name' => 'news',
@@ -130,20 +144,32 @@ return array(
             'collection_name' => 'sessions',
             'entity_http_methods' => array(
                 0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
             ),
             'collection_query_whitelist' => array(),
-            'page_size' => 25,
+            'page_size' => '9999999',
             'page_size_param' => null,
             'entity_class' => 'NapierManagementTraining\\V1\\Rest\\Sessions\\SessionsEntity',
             'collection_class' => 'NapierManagementTraining\\V1\\Rest\\Sessions\\SessionsCollection',
             'service_name' => 'sessions',
+        ),
+        'NapierManagementTraining\\V1\\Rest\\Titles\\Controller' => array(
+            'listener' => 'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesResource',
+            'route_name' => 'napier-management-training.rest.titles',
+            'route_identifier_name' => 'titles_id',
+            'collection_name' => 'titles',
+            'entity_http_methods' => array(),
+            'collection_http_methods' => array(
+                0 => 'GET',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => '1000',
+            'page_size_param' => null,
+            'entity_class' => 'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesEntity',
+            'collection_class' => 'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesCollection',
+            'service_name' => 'titles',
         ),
     ),
     'zf-content-negotiation' => array(
@@ -152,6 +178,8 @@ return array(
             'NapierManagementTraining\\V1\\Rest\\Venues\\Controller' => 'Json',
             'NapierManagementTraining\\V1\\Rest\\News\\Controller' => 'Json',
             'NapierManagementTraining\\V1\\Rest\\Sessions\\Controller' => 'Json',
+            'NapierManagementTraining\\V1\\Rest\\Titles\\Controller' => 'Json',
+            'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => 'Json',
         ),
         'accept_whitelist' => array(
             'NapierManagementTraining\\V1\\Rest\\Courses\\Controller' => array(
@@ -174,6 +202,16 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
+            'NapierManagementTraining\\V1\\Rest\\Titles\\Controller' => array(
+                0 => 'application/vnd.napier-management-training.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => array(
+                0 => 'application/vnd.napier-management-training.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ),
         ),
         'content_type_whitelist' => array(
             'NapierManagementTraining\\V1\\Rest\\Courses\\Controller' => array(
@@ -189,6 +227,14 @@ return array(
                 1 => 'application/json',
             ),
             'NapierManagementTraining\\V1\\Rest\\Sessions\\Controller' => array(
+                0 => 'application/vnd.napier-management-training.v1+json',
+                1 => 'application/json',
+            ),
+            'NapierManagementTraining\\V1\\Rest\\Titles\\Controller' => array(
+                0 => 'application/vnd.napier-management-training.v1+json',
+                1 => 'application/json',
+            ),
+            'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => array(
                 0 => 'application/vnd.napier-management-training.v1+json',
                 1 => 'application/json',
             ),
@@ -243,6 +289,201 @@ return array(
                 'route_name' => 'napier-management-training.rest.sessions',
                 'route_identifier_name' => 'sessions_id',
                 'is_collection' => true,
+            ),
+            'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'napier-management-training.rest.titles',
+                'route_identifier_name' => 'titles_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+            ),
+            'NapierManagementTraining\\V1\\Rest\\Titles\\TitlesCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'napier-management-training.rest.titles',
+                'route_identifier_name' => 'titles_id',
+                'is_collection' => true,
+            ),
+        ),
+    ),
+    'controllers' => array(
+        'factories' => array(
+            'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => 'NapierManagementTraining\\V1\\Rpc\\Registration\\RegistrationControllerFactory',
+        ),
+    ),
+    'zf-rpc' => array(
+        'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => array(
+            'service_name' => 'registration',
+            'http_methods' => array(
+                0 => 'POST',
+            ),
+            'route_name' => 'napier-management-training.rpc.registration',
+        ),
+    ),
+    'zf-content-validation' => array(
+        'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => array(
+            'input_filter' => 'NapierManagementTraining\\V1\\Rpc\\Registration\\Validator',
+        ),
+    ),
+    'input_filter_specs' => array(
+        'NapierManagementTraining\\V1\\Rpc\\Registration\\Validator' => array(
+            0 => array(
+                'name' => 'title',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'error_message' => 'You have to select a valid title.',
+                'continue_if_empty' => false,
+            ),
+            1 => array(
+                'name' => 'firstname',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            2 => array(
+                'name' => 'lastname',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            3 => array(
+                'name' => 'address',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            4 => array(
+                'name' => 'email',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            5 => array(
+                'name' => 'telephone',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            6 => array(
+                'name' => 'session',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            7 => array(
+                'name' => 'payment',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+        ),
+    ),
+    'zf-mvc-auth' => array(
+        'authorization' => array(
+            'NapierManagementTraining\\V1\\Rest\\Courses\\Controller' => array(
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'NapierManagementTraining\\V1\\Rest\\Venues\\Controller' => array(
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'NapierManagementTraining\\V1\\Rest\\News\\Controller' => array(
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'NapierManagementTraining\\V1\\Rest\\Sessions\\Controller' => array(
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'NapierManagementTraining\\V1\\Rest\\Titles\\Controller' => array(
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'NapierManagementTraining\\V1\\Rpc\\Registration\\Controller' => array(
+                'actions' => array(
+                    'registration' => array(
+                        'GET' => false,
+                        'POST' => false,
+                        'PATCH' => false,
+                        'PUT' => false,
+                        'DELETE' => false,
+                    ),
+                ),
             ),
         ),
     ),

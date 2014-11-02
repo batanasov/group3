@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Welcome to Napier Management Training</h1>
+    <div class="jumbotron">
+        <p class="lead">
+            Napier Management Training is a training company from a large University based in central Scotland. We offer a wide variety of commercial management courses: 
+        </p>
+        <ul>
+            <li ng-repeat="item in courses">
+                <a href="/course/{{item.id}}">{{item.title}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">
+        <h2>Latest news</h2>
+        <ul class="list-unstyled">
+            <li ng-repeat="item in news">
+                <h3>{{item.title}} <small>by {{item.user.firstname}} {{item.user.lastname}}, {{item.date}}</small></h3>
+                <div ng-bind-html="item.content" class="text-justify"></div>
+                <hr>
+            </li>
+        </ul>
+    </div>
+    <div class="col-sm-6">
+        <h2>Discover our venues</h2>
+        <p>We provide management training in several locations in Scotland, so wherever you are you can come and learn with us.</p>
+        <p>Our venues are provided by Regus Business Centre, a multinational corporation that offers office accommodations. All meeting rooms provide space, boards and video communications technologies and include free internet access. </p>
+        <ul>
+            <li ng-repeat="item in venues">
+                <a href="/venue/{{item.id}}">{{item.name}}</a>
+            </li>
+        </ul>
+        <hr>
+    </div>
+</div>

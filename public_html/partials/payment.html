@@ -1,0 +1,22 @@
+<style>
+    footer, header, nav {
+        display: none;
+    }
+    html {
+        padding-top: 15px;
+    }
+</style>
+<div class="container-fluid">
+    <h1>Payment page</h1>
+    <div class="alert-block">
+        <div class="alert alert-info">This is a mockup page. The live website page would be a redirection on the payment provider platform.</div>
+        <div class="alert alert-danger">Click on "Finalise payment" to simulate payment using "{{payment}}".</div>
+    </div>
+    <div class="jumbotron text-center">
+        <div class="btn-group">
+            <button class="btn btn-success" ng-click="submit()">Finalise payment</button>
+            <button class="btn btn-danger" ng-click="failure()">Simulate payment failure</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+</div>

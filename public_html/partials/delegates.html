@@ -1,96 +1,81 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div class="container-fluid">
-            <div class="btn-group-vertical col-xs-3 col-sm-2 col-md-2 col-lg-2">
-               <!-- <button class="btn btn-default">Courses</button> -->
-               <!-- <button class="btn btn-default" ng-click="ven()">Venues</button> -->
-               <!-- <button class="btn btn-default">Locations</button> -->
-                <button class="btn btn-default" ng-click="register()">Register</button>
-                <button class="btn btn-default">Discussion</button>
-            </div>
-            <!--Register form-->
-            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10">
-                <div class="input-group-vertical {{classN}}">
-                    <span class="input-group-addon">Name</span>
-                    <input type="text" class="form-control" required>
-                    <span class="input-group-addon">Surname</span>
-                    <input type="text" class="form-control" required>
-                    <span class="input-group-addon">Select course</span>
-                    <select ng-model="query" class="btn btn-default btn-block">
-                        <option ng-repeat="course in courses" value="{{course.title}}">{{course.title + ". Price " + course.price}}</option>
-                    </select> 
-                    <span class="input-group-addon">Select venue</span>
-                    <select class="btn btn-default btn-block">
-                        <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
-                    </select> 
-                    <span class="input-group-addon">Select payment type</span>
-                    <select class="btn btn-block btn-default" ng-model="option">
-                        <option class="form-control" value="paypal">Paypal</option>
-                        <option class="form control" value="debitcard">Debit Card</option>
+<div class="container">
+    <h1>Course registration</h1>
+    <div class="alert alert-info">You can register by mail by filling up this document: <a href="/NMT_Application_Form.pdf" target="_blank">Napier Management Training - course application form</a>. <small><i>Address and instructions are available in the document.</i></small></div>
+    <form class="form-horizontal" ng-submit="submit(registrationform)" id="registrationform" role="form">
+        <fieldset>
+            <legend>Your details</legend>
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">Title</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="title" name="title" required="required" ng-model="formData.title">
+                        <option></option>
+                        <option ng-repeat="title in titles">{{title.title}}</option>
                     </select>
-                    <button class="btn btn-defautl btn-block" type="submit" ng-click="proceed()">Proceed</button>
-                </div>
-                <div class="{{classPP}}">
-                    <h2> Paypal details: </h2>
-                    <h3 ng-repeat="course in courses | filter:query">Total amount: {{course.price}}</h3>
-                     <div class="input-group">
-                       <span class="input-group-addon">Username</span>
-                       <input type="text" class="form-control" required>
-                       <span class="input-group-addon">Password</span>
-                       <input type="password" class="form-control" required>
-                       </div>
-                    <button class="btn btn-success btn-block">Submit</button>
-                </div>
-            <div class="{{classDC}}">       
-                <h2>Debit Card:</h2>
-                <h3 ng-repeat="course in courses | filter:query">Total amount: {{course.price}}</h3>
-                <div class="input-group-vertical">
-                    <span class="input-group-addon">Name on card</span>
-                    <input type="text" class="form-control" required>
-                    <span class="input-group-addon">Card number</span>
-                    <input type="number" class="form-control" required>
-                    <span class="input-group-addon">Expiration date</span>
-                    <input type="date" class="form-control" required>
-                    <span class="input-group-addon">Security code</span>
-                    <input type="number" class="form-control" required>
-                    <button class="btn btn-block btn-success">Submit</button>
-                    <button class="btn btn-block btn-danger">Cancel</button>
-                  </div>
-                 
-            </div>
-        </div>
-            <!--End of register form-->
-            <!--venues-->
-            <div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 {{classV}}">
-                <select class="btn btn-default btn-block" ng-model="query">
-                    <option value="" disabled>Select Venue:</option>
-                    <option value="">All venues</option>
-                    <option ng-repeat="venue in venues" value="{{venue.name}}">{{venue.name}}</option>
-                </select> 
-                <br/><br/>
-                <div class="container-fluid">
-                    <ul style="list-style-type: none">
-                        <li class="jumbotron" ng-repeat="venue in venues | filter:query">
-                            <p>{{venue.name}}</p>
-                            <p>Description: {{venue.description}}</p>
-                            <p>Address: {{venue.address}}</p>
-                            <p>Post Code: {{venue.postcode}}</p>
-                        </li>
-                      </ul>
                 </div>
             </div>
-            <!--end of venues-->
-        </div>
-    </body>
-</html>
+            <div class="form-group">
+                <label for="firstname" class="col-sm-2 control-label">First name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="firstname" ng-model="formData.firstname" name="firstname" placeholder="First name" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">Last name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control"  name="lastname" ng-model="formData.lastname" id="lastname" placeholder="Last name" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address" class="col-sm-2 control-label">Address</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="address" name="address" ng-model="formData.address" placeholder="Postal address" required="required"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" name="email" ng-model="formData.email" placeholder="Email address" required="required">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telephone" class="col-sm-2 control-label">Telephone</label>
+                <div class="col-sm-10">
+                    <input type="tel" class="form-control" id="telephone" name="telephone" ng-model="formData.telephone" placeholder="Telephone number" required="required">
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Course details</legend>
+            <div class="form-group">
+                <label for="session" class="col-sm-2 control-label">Course</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="session" name="session" required="required" ng-model="formData.session">
+                        <option></option>
+                        <optgroup ng-repeat="course in courses" label="{{course.title}}">
+                            <option ng-repeat="session in course.sessions" value="{{session.id}}">{{session.venue.name}} - {{session.date}}</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="payment" class="col-sm-2 control-label">Payment type</label>
+                <div class="col-sm-10">
+                    <label class="radio-inline">
+                        <input type="radio" name="payment" id="payment1" value="Debit card" ng-model="formData.payment"> Debit card
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="payment" id="payment2" value="Paypal" ng-model="formData.payment"> Paypal
+                    </label>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Registration</legend>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-primary" value="Register now!">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

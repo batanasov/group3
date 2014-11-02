@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <h1>Administration dashboard <button class="btn btn-xs btn-danger" ng-click="logout()">Logout</button></h1>
+    
+    <ul class="nav nav-tabs" id="tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#courses" role="tab" data-toggle="tab">Courses</a></li>
+        <li role="presentation"><a href="#venues" role="tab" data-toggle="tab">Venues</a></li>
+        <li role="presentation"><a href="#news" role="tab" data-toggle="tab">News</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="courses">
+            <h2>Courses</h2>
+            <a href="" class="btn btn-primary top">Add a course</a>
+            <select ng-model="coursesQuery" class="btn btn-default" ng-options="course.title for course in courses"><option></option></select>
+            <table class="table table-bordered table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Sessions</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in courses | filter:coursesQuery">
+                        <td>{{item.title}}</td>
+                        <td>{{item.price}}</td>
+                        <td>
+                            <ul ng-repeat="session in item.sessions">
+                                <li><a>{{session.venue.name}}, {{session.date}}</a></li>
+                            </ul>
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <a href="" class="btn btn-default">Edit</a>
+                                <a href="" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="venues">
+            <h2>Venues</h2>
+            <a href="" class="btn btn-primary top">Add a venue</a>
+            <select ng-model="venuesQuery" class="btn btn-default" ng-options="venue.name for venue in venues"><option></option></select>
+            <table class="table table-bordered table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Sessions</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in venues | filter:venuesQuery">
+                        <td>{{item.name}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.sessions}}</td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <a href="" class="btn btn-default">Edit</a>
+                                <a href="" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="news">
+            <h2>News</h2>
+            <a href="" class="btn btn-primary top">Add a news</a>
+            <select ng-model="query" class="btn btn-default" ng-options="item.title as item.title group by item.date for item in news"><option></option></select>
+            <table class="table table-bordered table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Author</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in news | filter:query">
+                        <td>{{item.title}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.user.firstname}} {{item.user.lastname}}</td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <a href="" class="btn btn-default">Edit</a>
+                                <a href="" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $('#tabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>

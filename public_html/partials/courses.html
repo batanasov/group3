@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container">
     <h1>Our courses</h1>
     <select ng-model="query" class="top btn btn-default btn-block">
         <option value="" disabled>Select Course:</option>
@@ -27,13 +27,22 @@
                         <th>Date</th>
                         <th>Duration</th>
                         <th>Venue</th>
+                        <th>Register</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="session in course.sessions">
                         <td>{{session.date}}</td>
-                        <td>{{session.duration}}</td>
+                        <td>{{session.duration}} days</td>
                         <td><a href="/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
+                        <td>
+                            <div ng-show="session.users < 15">
+                                <a href="/delegates/{{session.id}}" class="btn btn-xs btn-primary">Register now!</a>
+                            </div>
+                            <div ng-show="session.users >= 15">
+                                <span class="btn btn-xs btn-default disabled">This course is full</span>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
