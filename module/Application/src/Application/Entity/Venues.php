@@ -68,6 +68,7 @@ class Venues implements JsonSerializable
     public function __construct()
     {
         $this->courses = new ArrayCollection();
+        $this->sessions = new ArrayCollection();
     }
     
     /**

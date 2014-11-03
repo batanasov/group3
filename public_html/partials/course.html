@@ -28,16 +28,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="session in course.sessions | filter:query">
+            <tr ng-repeat="session in course.sessions| filter:query">
                 <td>{{session.date}}</td>
                 <td>{{session.duration}}</td>
                 <td><a href="/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
                 <td>
-                    <div ng-show="session.users < 15">
-                        <a href="/delegates/{{session.id}}" class="btn btn-xs btn-primary">Register now!</a>
-                    </div>
-                    <div ng-show="session.users >= 15">
-                        <span class="btn btn-xs btn-default disabled">This course is full</span>
+                    <span ng-if="session.cancelled" class="btn btn-xs btn-warning disabled">Cancelled</span>
+                    <div ng-if="!session.cancelled">
+                        <div ng-show="session.users.length < course.limit">
+                            <a href="/delegates/{{session.id}}" class="btn btn-xs btn-primary">Register now!</a>
+                        </div>
+                        <div ng-show="session.users.length >= course.limit">
+                            <span class="btn btn-xs btn-default disabled">This course is full</span>
+                        </div>
                     </div>
                 </td>
             </tr>

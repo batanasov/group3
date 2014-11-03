@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h1>Administration dashboard <button class="btn btn-xs btn-danger" ng-click="logout()">Logout</button></h1>
-    
+
     <ul class="nav nav-tabs" id="tabs" role="tablist">
         <li role="presentation" class="active"><a href="#courses" role="tab" data-toggle="tab">Courses</a></li>
         <li role="presentation"><a href="#venues" role="tab" data-toggle="tab">Venues</a></li>
@@ -11,7 +11,6 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="courses">
             <h2>Courses</h2>
-            <a href="" class="btn btn-primary btn-xs top">Add a course</a>
             <label for="coursesQuery">Filter</label>
             <select ng-model="coursesQuery" id="coursesQuery" ng-options="course.title for course in courses"><option></option></select>
             <table class="table table-bordered table-responsive table-striped">
@@ -24,17 +23,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in courses | filter:coursesQuery">
+                    <tr>
+                        <td><a href="#" editable-text="addCourse.title">{{ addCourse.title || 'Course title' }}</a></td>
+                        <td><a href="#" editable-number="addCourse.price">{{ addCourse.price || 'Course price' }}</a></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group btn-group-xs"><a href="#" class="btn btn-primary" ng-click="addItem('courses');">Add this new course</a></div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in courses| filter:coursesQuery">
                         <td>{{item.title}}</td>
                         <td>{{item.price}}</td>
                         <td>
                             <ul ng-repeat="session in item.sessions">
-                                <li><a href="/admin/venue/{{session.venue.id}}">{{session.venue.name}}, {{session.date}}</a></li>
+                                <li>{{session.venue.name}}, {{session.date}}<span ng-if="session.cancelled"> - <i>Cancelled</i></span></li>
                             </ul>
                         </td>
                         <td>
                             <div class="btn-group btn-group-xs">
-                                <a href="" class="btn btn-default">Edit</a>
+                                <a href="/admin/course/{{item.id}}" class="btn btn-default">View / Edit</a>
                                 <a href="#" ng-click="remove('courses', item.id);" class="btn btn-danger">Delete</a>
                             </div>
                         </td>
@@ -56,7 +63,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in venues | filter:venuesQuery">
+                    <tr>
+                        <td><a href="#" editable-text="addVenue.name">{{ addVenue.name || 'Venue name' }}</a></td>
+                        <td><a href="#" editable-text="addVenue.address">{{ addVenue.address || 'Postal address' }}</a></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group btn-group-xs"><a href="#" class="btn btn-primary" ng-click="addItem('venues');">Add this new venue</a></div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in venues| filter:venuesQuery">
                         <td>{{item.name}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sessions}}</td>
@@ -67,22 +82,13 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td><a href="#" editable-text="venue.name">{{ venue.name || 'Venue name' }}</a></td>
-                        <td><a href="#" editable-text="venue.address">{{ venue.address || 'Postal address' }}</a></td>
-                        <td></td>
-                        <td>
-                            <div class="btn-group btn-group-xs"><a href="#" class="btn btn-primary">Add this new venue</a></div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
         <div role="tabpanel" class="tab-pane" id="news">
             <h2>News</h2>
-            <a href="" class="btn btn-primary btn-xs top">Add a news</a>
-            <label for="coursesQuery">Filter:</label>
-            <select ng-model="query" ng-options="item.title as item.title group by item.date for item in news"><option></option></select>
+            <label for="newsQuery">Filter:</label>
+            <select ng-model="query" id="newsQuery" ng-options="item.title as item.title group by item.date for item in news"><option></option></select>
             <table class="table table-bordered table-responsive table-striped">
                 <thead>
                     <tr>
@@ -93,7 +99,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in news | filter:query">
+                    <tr>
+                        <td><a href="#" editable-text="addNews.title">{{ addNews.title || 'News title' }}</a></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <div class="btn-group btn-group-xs"><a href="#" class="btn btn-primary" ng-click="addItem('news');">Add this news</a></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in news| filter:query">
                         <td>{{item.title}}</td>
                         <td>{{item.date}}</td>
                         <td>{{item.user.firstname}} {{item.user.lastname}}</td>
@@ -110,8 +126,8 @@
     </div>
 </div>
 <script>
-    $('#tabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
+            $('#tabs a').click(function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
 </script>

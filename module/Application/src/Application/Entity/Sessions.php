@@ -5,6 +5,7 @@ namespace Application\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Doctrine\Common\Collections\ArrayCollection;
+use DateTime;
 
 /**
  * Courses
@@ -74,6 +75,55 @@ class Sessions implements JsonSerializable
         $this->venue = $venue;
         return $this;
     }
+    
+        /**
+     * 
+     * @return DateTime
+     */
+    public function getDateStart() {
+        return $this->dateStart;
+    }
+    
+    /**
+     * 
+     * @param DateTime $dateStart
+     */
+    public function setDateStart(DateTime $dateStart) {
+        $this->dateStart = $dateStart;
+        return $this;
+    }
+    /**
+     * 
+     * @return DateTime
+     */
+    public function getDateEnd() {
+        return $this->dateEnd;
+    }
+    
+    /**
+     * 
+     * @param DateTime $dateEnd
+     */
+    public function setDateEnd(DateTime $dateEnd) {
+        $this->dateEnd = $dateEnd;
+        return $this;
+    }    
+    
+    /**
+     * 
+     * @param boolean $cancelled
+     */
+    public function setCancelled($cancelled) {
+        $this->cancelled = $cancelled;
+        return $this;
+    }
+    /**
+     * 
+     * @return boolean
+     */
+    public function getCancelled() {
+        return $this->cancelled;
+    }
 
     /**
      * @var \DateTime
@@ -88,6 +138,12 @@ class Sessions implements JsonSerializable
      * @ORM\Column(name="date_end", type="datetime", nullable=false)
      */
     private $dateEnd;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=false)
+     */
+    private $cancelled = false;
     
     /**
      * Get id
@@ -107,6 +163,8 @@ class Sessions implements JsonSerializable
     private $users;
 
     public function __construct() {
+        $this->dateStart = new DateTime();
+        $this->dateEnd = new DateTime();
         $this->users = new ArrayCollection();
     }
     
@@ -118,9 +176,9 @@ class Sessions implements JsonSerializable
         $values = get_object_vars($this);
         $values['date'] = "From {$values['dateStart']->format('d/m/Y')} to {$values['dateEnd']->format('d/m/Y')}";
         $values['duration'] = $values['dateStart']->diff($values['dateEnd'])->format('%d days') + 1;
-        $values['users'] = count($this->users);
-        unset($values['dateStart']);
-        unset($values['dateEnd']);
+        $values['users'] = $this->users->toArray();
+        $values['dateStart'] = $values['dateStart']->format('d/m/Y');
+        $values['dateEnd'] = $values['dateEnd']->format('d/m/Y');
         unset($values['course']);
         return $values;
     }

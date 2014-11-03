@@ -236,6 +236,8 @@ class Users implements JsonSerializable
     
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        $values = get_object_vars($this);
+        unset($values['sessions']);
+        return $values;
     }
 }

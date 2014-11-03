@@ -1,4 +1,4 @@
-var nmt = angular.module('nmt',['ngRoute', 'ngCookies', 'ngAnimate', 'textAngular', 'angular-loading-bar','toaster','xeditable']);
+var nmt = angular.module('nmt',['ngRoute', 'ngCookies', 'ngAnimate', 'textAngular', 'angular-loading-bar','toaster','xeditable','ui.bootstrap']);
 
 nmt.run(function(editableOptions) {
     editableOptions.theme = 'bs3';
@@ -382,17 +382,103 @@ nmt.controller('adminDashboardCtrl', ['$rootScope', '$scope', '$http', '$sce', '
         $scope.courses = data;
     });
     
-    $scope.addItem = function(type, objectName) {
-        
+    $scope.addItem = function(type) {
+        try {
+        var values = {};
+        if(type === 'news') {
+            values = $scope.addNews || {};
+            if (values.title === null || values.title === undefined) {
+                throw {'message': 'Title is required to add a news'};
+            }
+            $http.post('/api/admin/news', values)
+            .success(function(data) {
+                $rootScope.notifications = [{
+                    "@unid": "B433C471EEAB3D5180257CD000587983",
+                    "title": "Your " + type + " has been added.",
+                    "type": "success",
+                    "message": null,
+                    "for": "Test User"
+                }];
+                $scope.addNews.title = null;
+                $location.path('/admin/news/'+data.id);
+            });
+        }
+        if(type === 'venues') {
+            values = $scope.addVenue || {};
+            if (values.name === null || values.name === undefined) {
+                throw {'message': 'Name is required to add a venue'};
+            }
+            if (values.address === null || values.address === undefined) {
+                throw {'message': 'Address is required to add a venue'};
+            }
+            $http.post('/api/admin/venues', values)
+            .success(function(data) {
+                $rootScope.notifications = [{
+                    "@unid": "B433C471EEAB3D5180257CD000587983",
+                    "title": "Your " + type + " has been added.",
+                    "type": "success",
+                    "message": null,
+                    "for": "Test User"
+                }];
+                $scope.addVenue.name = null;
+                $scope.addVenue.address = null;
+                $location.path('/admin/venue/'+data.id);
+            });
+        }
+        if(type === 'courses') {
+            values = $scope.addCourse || {};
+            if (values.title === null || values.title === undefined) {
+                throw {'message': 'Title is required to add a course'};
+            }
+            if (values.price === null || values.price === undefined) {
+                throw {'message': 'Price is required to add a course'};
+            }
+            $http.post('/api/admin/courses', values)
+            .success(function(data) {
+                $rootScope.notifications = [{
+                    "@unid": "B433C471EEAB3D5180257CD000587983",
+                    "title": "Your " + type + " has been added.",
+                    "type": "success",
+                    "message": null,
+                    "for": "Test User"
+                }];
+                $scope.addCourse.title = null;
+                $scope.addCourse.price = null;
+                $location.path('/admin/course/'+data.id);
+            });
+        }
+        } catch(error) {
+            $rootScope.notifications = [{
+                "@unid": "B433C471EEAB3D5180257CD000587983",
+                "title": "Unable to add your " + type,
+                "type": "error",
+                "message": error.message,
+                "for": "Test User"
+            }];
+        }
     };
     
     $scope.remove = function(type, value) {
         var collection = $scope[type].slice(0);
-        /**
-         * @todo add api call 
-         */
-        $scope[type] = collection.filter(function(item) {
-            return item.id !== value;
+        $http.delete('/api/admin/' + type + '/' + value)
+        .success(function(data) {
+            item = type;
+            if(type === 'venues') {
+                item = 'venue';
+            }
+            if(type === 'courses') {
+                item = 'course';
+            }
+            $rootScope.notifications = [{
+                "@unid": "B433C471EEAB3D5180257CD000587983",
+                "title": "Your " + item + " has been removed.",
+                "type": "success",
+                "message": null,
+                "for": "Test User"
+            }];
+            $scope[type] = collection.filter(function(item) {
+                return item.id !== value;
+            });
         });
     };
 }]);
@@ -431,7 +517,7 @@ nmt.controller('adminNewsCtrl', ['$scope', '$http', '$sce', '$routeParams', func
     $http.get('api/admin/news/'+$routeParams.newsId).success(function(data){
         data.content = $sce.trustAsHtml(data.content);
         $scope.news = data;
-    });
+    })
     $scope.patchNews = function(field, form) {
         var values = {};
         values[field] = $scope.news[field];
@@ -440,4 +526,123 @@ nmt.controller('adminNewsCtrl', ['$scope', '$http', '$sce', '$routeParams', func
             values
         ).success(function(data){});
     };
+}]);
+
+nmt.controller('adminCourseCtrl', ['$rootScope', '$scope', '$http', '$sce', '$routeParams', function($rootScope, $scope, $http, $sce, $routeParams) {
+    $scope.venues = [];
+    $http.get('api/admin/courses/'+$routeParams.courseId).success(function(data){
+        data.description = $sce.trustAsHtml(data.description);
+        $scope.course = data;
+        angular.forEach(data.sessions, function (session) {
+            var dateStart = moment(session.dateStart, 'DD/MM/YYYY');
+            if(session.users.length < 5 && dateStart.diff(moment(),'days')+1 <= 17) {
+                $rootScope.notifications = [{
+                    "@unid": "B433C471EEAB3D5180257CD000587983",
+                    "title": "A session at "+session.venue.name+" venue from the "+session.dateStart+" to the "+session.dateEnd+" has only "+session.users.length+" attendees. You should cancel it.",
+                    "type": "warning",
+                    "message": null,
+                    "for": "Test User"
+                }];
+            }
+        });
+        $scope.venues.length ? $scope.venues : $http.get('/api/admin/venues').success(function(data) {
+            $scope.venues = data;
+        });
+    });
+    $scope.loadVenues = function() {
+        return $scope.venues.length ? null : $http.get('/api/admin/venues').success(function(data) {
+            $scope.venues = data;
+        });
+    };
+    $scope.patchCourse = function(field, form) {
+        var values = {};
+        values[field] = $scope.course[field];
+        $http.patch(
+            '/api/admin/courses/'+$routeParams.courseId,
+            values
+        ).success(function(data){});
+    }; 
+    $scope.isOpen = function(session) {
+        var dateStart = moment(session.dateStart, 'DD/MM/YYYY');
+        console.log(dateStart.diff(moment(),'days')+1);
+        return session.users.length >= 5 || dateStart.diff(moment(),'days')+1 > 17;
+    };
+    $scope.addItem = function(type) {
+        try {
+        var values = {};
+        if(type === 'sessions') {
+            values = $scope.addSession || {};
+            if (values.venue === null || values.venue === undefined) {
+                throw {'message': 'Venue is required to add a session'};
+            }
+            if (values.dateStart === null || values.dateStart === undefined) {
+                throw {'message': 'Start date is required to add a session'};
+            }
+            if (values.dateEnd === null || values.dateEnd === undefined) {
+                throw {'message': 'End date is required to add a session'};
+            }
+            values.idCourse = $scope.course.id;
+            $http.post('/api/admin/sessions', values)
+            .success(function(data) {
+                $rootScope.notifications = [{
+                    "@unid": "B433C471EEAB3D5180257CD000587983",
+                    "title": "Your session has been added.",
+                    "type": "success",
+                    "message": null,
+                    "for": "Test User"
+                }];
+                $scope.addSession.venue = null;
+                $scope.addSession.dateStart = null;
+                $scope.addSession.dateEnd = null;
+                $scope.course[type].push(data);
+            });
+        }
+        } catch(error) {
+            $rootScope.notifications = [{
+                "@unid": "B433C471EEAB3D5180257CD000587983",
+                "title": "Unable to add your " + type,
+                "type": "error",
+                "message": error.message,
+                "for": "Test User"
+            }];
+        }
+    };
+    
+    $scope.remove = function(type, value) {
+        var collection = $scope[type].slice(0);
+        $http.delete('/api/session/' + type + '/' + value)
+        .success(function(data) {
+            item = type;
+            if(type === 'sessions') {
+                item = 'session';
+            }
+            $rootScope.notifications = [{
+                "@unid": "B433C471EEAB3D5180257CD000587983",
+                "title": "Your " + item + " has been removed.",
+                "type": "success",
+                "message": null,
+                "for": "Test User"
+            }];
+            $scope[type] = collection.filter(function(item) {
+                return item.id !== value;
+            });
+        });
+    };
+    $scope.cancel = function(session) {
+        var values = {};
+        values.cancelled = 1;
+        $http.patch(
+            '/api/admin/sessions/'+session.id,
+            values
+        ).success(function(data){
+            session.cancelled = true;
+            $rootScope.notifications = [{
+                "@unid": "B433C471EEAB3D5180257CD000587983",
+                "title": "The session has been cancelled.",
+                "type": "success",
+                "message": null,
+                "for": "Test User"
+            }];
+        });
+    }; 
 }]);

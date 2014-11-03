@@ -1,0 +1,61 @@
+<div class="container">
+    <a href="/admin/dashboard" class="btn btn-default top">Back to admin dashboard</a>
+    <h1><a href="#" editable-text="course.title" onaftersave="patchCourse('title', this);">{{course.title}}</a></h1>
+    <div class="jumbotron">
+        <a href="#" editable-textarea="course.description" onaftersave="patchCourse('description', this);">
+            <div ng-bind-html="course.description || 'No content yet'"></div>
+        </a>
+    </div>
+    <div>Price: 
+         <a href="#" editable-number="course.price" onaftersave="patchCourse('price', this);">
+             {{course.price || 'No price yet'}}
+         </a>
+    </div>
+    <hr>
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Venue</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Duration</th>
+                <th>Registered delegates</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="#" editable-select="addSession.venue" onshow="loadVenues()" e-ng-options="v.id as v.name for v in venues">{{ addSession.venue || 'Session venue' }}</a></td>
+                <td><a href="#" editable-date="addSession.dateStart">{{ addSession.dateStart || 'Session start date' }}</a></td>
+                <td><a href="#" editable-date="addSession.dateEnd">{{ addSession.dateEnd || 'Session end date' }}</a></td>
+                <td></td>
+                <td></td>
+                <td><div class="btn-group btn-group-xs"><a href="#" class="btn btn-primary" ng-click="addItem('sessions');">Add this session</a></div></td>
+            </tr>
+            <tr ng-repeat="session in course.sessions">
+                <td><a href="/admin/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
+                <td>{{session.dateStart}}</td>
+                <td>{{session.dateEnd}}</td>
+                <td>{{session.duration}} days</td>
+                <td style="width: 50%;">
+                    {{session.users.length}} delegates - <input id="checkbox{{session.id}}" type="checkbox" ng-model="session.showDelegates"> <label style="font-weight: normal;" for="checkbox{{session.id}}">for full list</label><br/>
+                    <table ng-show="session.showDelegates" class="check-element animate-show table table-bordered table-hover table-responsive table-striped table-condensed">
+                        <tbody>
+                            <tr ng-repeat="user in session.users">
+                                <td>{{user.title.title}} {{user.firstname}} {{user.lastname}}</td>
+                                <td><a href="mailto:{{user.email}}" target="_blank">Email</a></td>
+                                <td><a href="tel:{{user.tel}}" target="_blank">Phone</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <span ng-if="!session.cancelled">
+                        <a href="#" ng-click="cancel(session);" class="btn btn-danger btn-xs" ng-class="{disabled: isOpen(session)}">Cancel</a>
+                    </span>
+                    <span ng-if="session.cancelled" class="btn btn-warning btn-xs disabled">Cancelled</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>  

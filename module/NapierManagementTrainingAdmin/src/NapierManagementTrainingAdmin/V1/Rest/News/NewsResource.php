@@ -6,6 +6,8 @@ use ZF\Rest\AbstractResourceListener;
 use Application\Repository\NewsRepository;
 use ZF\ContentNegotiation\ViewModel;
 use DateTime;
+use Application\Entity\News;
+
 class NewsResource extends AbstractResourceListener
 {
     /**
@@ -32,7 +34,20 @@ class NewsResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $news = new News();
+        $news->setTitle($data->title);
+        if (isset($data->content)) {
+            $news->setContent($data->content);
+        } else {
+            $news->setContent('No content added yet...');
+        }
+        $news->setDate(new DateTime());
+        $news->setUser(
+            $this->em->getRepository('Application\Entity\Administrators')->findOneBy([])
+        );
+        $this->em->persist($news);
+        $this->em->flush();
+        return $news;
     }
 
     /**
@@ -43,7 +58,9 @@ class NewsResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $this->em->remove($this->repository->find($id));
+        $this->em->flush();
+        return true;
     }
 
     /**

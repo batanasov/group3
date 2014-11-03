@@ -6,7 +6,7 @@
         <option ng-repeat="course in courses" value="{{course.title}}">{{course.title}}</option>
     </select> 
     <ul class="list-unstyled">
-        <li class="jumbotron" ng-repeat="course in courses | filter:query">
+        <li class="jumbotron" ng-repeat="course in courses| filter:query">
             <h2>{{course.title}}</h2>
             <table class="table table-bordered table-responsive">
                 <tbody>    
@@ -36,11 +36,14 @@
                         <td>{{session.duration}} days</td>
                         <td><a href="/venue/{{session.venue.id}}">{{session.venue.name}}</a></td>
                         <td>
-                            <div ng-show="session.users < 15">
-                                <a href="/delegates/{{session.id}}" class="btn btn-xs btn-primary">Register now!</a>
-                            </div>
-                            <div ng-show="session.users >= 15">
-                                <span class="btn btn-xs btn-default disabled">This course is full</span>
+                            <span ng-if="session.cancelled" class="btn btn-xs btn-warning disabled">Cancelled</span>
+                            <div ng-if="!session.cancelled">
+                                <div ng-show="session.users.length < course.limit">
+                                    <a href="/delegates/{{session.id}}" class="btn btn-xs btn-primary">Register now!</a>
+                                </div>
+                                <div ng-show="session.users.length >= course.limit">
+                                    <span class="btn btn-xs btn-default disabled">This course is full</span>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -48,5 +51,5 @@
             </table>
             <a href="/course/{{course.id}}" class="btn btn-primary">More details</a>
         </li>
-      </ul>
+    </ul>
 </div>

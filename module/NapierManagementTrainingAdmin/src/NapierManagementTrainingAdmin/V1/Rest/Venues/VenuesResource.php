@@ -4,6 +4,7 @@ namespace NapierManagementTrainingAdmin\V1\Rest\Venues;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 use ZF\ContentNegotiation\ViewModel;
+use Application\Entity\Venues;
 
 class VenuesResource extends AbstractResourceListener
 {
@@ -36,8 +37,18 @@ class VenuesResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    {
-        return new ApiProblem(405, 'The POST method has not been defined');
+    { 
+        $venues = new Venues();
+        $venues->setName($data->name);
+        $venues->setAddress($data->address);
+        if (isset($data->description)) {
+            $venues->setDescription($data->description);
+        } else {
+            $venues->setDescription('No description added yet...');
+        }
+        $this->em->persist($venues);
+        $this->em->flush();
+        return $venues;
     }
 
     /**
@@ -48,7 +59,9 @@ class VenuesResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $this->em->remove($this->repository->find($id));
+        $this->em->flush();
+        return true;
     }
 
     /**

@@ -8,7 +8,7 @@ use JsonSerializable;
 /**
  * News
  *
- * @ORM\Table(name="news", indexes={@ORM\Index(name="iduser", columns={"iduser"})})
+ * @ORM\Table(name="news")
  * @ORM\Entity(repositoryClass="Application\Repository\NewsRepository")
  */
 class News implements JsonSerializable
@@ -44,16 +44,13 @@ class News implements JsonSerializable
     private $date = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \Application\Entity\Users
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Entity\Users")
+     * @var \Application\Entity\Administrators
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Administrators", inversedBy="news")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iduser", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="author", referencedColumnName="username")
      * })
      */
-    private $user;
-
-
+    private $author;
 
     /**
      * Get id
@@ -140,9 +137,9 @@ class News implements JsonSerializable
      * @param \Application\Entity\Users $iduser
      * @return News
      */
-    public function setUser(\Application\Entity\Users $user = null)
+    public function setUser(\Application\Entity\Administrators $user = null)
     {
-        $this->user = $user;
+        $this->author = $user;
 
         return $this;
     }
@@ -150,16 +147,18 @@ class News implements JsonSerializable
     /**
      * Get iduser
      *
-     * @return \Application\Entity\Users 
+     * @return \Application\Entity\Administrators 
      */
     public function getUser()
     {
-        return $this->user;
+        return $this->author;
     }
 
     public function jsonSerialize() {
         $values = get_object_vars($this);
         $values['date'] = $values['date']->format('d/m/Y');
+        $values['user'] = $values['author'];
+        unset($values['author']);
         return $values;
     }
 

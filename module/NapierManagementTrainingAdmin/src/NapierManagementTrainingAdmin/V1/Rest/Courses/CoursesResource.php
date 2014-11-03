@@ -3,6 +3,8 @@ namespace NapierManagementTrainingAdmin\V1\Rest\Courses;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use ZF\ContentNegotiation\ViewModel;
+use Application\Entity\Courses;
 
 class CoursesResource extends AbstractResourceListener
 {
@@ -23,7 +25,17 @@ class CoursesResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $course = new Courses();
+        $course->setTitle($data->title);
+        $course->setPrice($data->price);
+        if (isset($data->description)) {
+            $course->setDescription($data->description);
+        } else {
+            $course->setDescription('No description added yet...');
+        }
+        $this->em->persist($course);
+        $this->em->flush();
+        return $course;
     }
 
     /**
@@ -34,7 +46,9 @@ class CoursesResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        $this->em->remove($this->repository->find($id));
+        $this->em->flush();
+        return true;
     }
 
     /**
@@ -56,7 +70,7 @@ class CoursesResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        return $this->repository->find($id);
     }
 
     /**
@@ -79,7 +93,18 @@ class CoursesResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        /** @var $course \Application\Entity\Courses */
+        $course = $this->repository->find($id);
+        $properties = array_keys(get_object_vars($data));
+        foreach ($properties as $property) {
+            $setterName = 'set'.ucfirst($property);
+            if (method_exists($course, $setterName)) {
+                $course->$setterName($data->$property);
+            }
+        }
+        $course->setLimit(15);
+        $this->em->flush();
+        return new ViewModel();
     }
 
     /**

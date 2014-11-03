@@ -5,6 +5,8 @@ class SessionsResourceFactory
 {
     public function __invoke($services)
     {
-        return new SessionsResource();
+        $em = $services->get('Doctrine\ORM\EntityManager');
+        $repository = $em->getRepository('Application\Entity\Sessions');
+        return new SessionsResource($em, $repository);
     }
 }

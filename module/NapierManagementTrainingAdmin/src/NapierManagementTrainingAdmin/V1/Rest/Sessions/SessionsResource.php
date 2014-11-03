@@ -3,9 +3,22 @@ namespace NapierManagementTrainingAdmin\V1\Rest\Sessions;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use ZF\ContentNegotiation\ViewModel;
+use Application\Entity\Sessions;
+use DateTime;
 
 class SessionsResource extends AbstractResourceListener
 {
+    private $em;
+    private $repository;
+    
+    public function __construct($em, $repository) 
+    {
+        $this->em = $em;
+        $this->repository = $repository;        
+    }
+
+
     /**
      * Create a resource
      *
@@ -14,7 +27,14 @@ class SessionsResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $session = new Sessions();
+        $session->setVenue($this->em->getRepository('Application\Entity\Venues')->find($data->venue));
+        $session->setDateStart(new DateTime($data->dateStart));
+        $session->setDateEnd(new DateTime($data->dateEnd));
+        $session->setCourse($this->em->getRepository('Application\Entity\Courses')->find($data->idCourse));
+        $this->em->persist($session);
+        $this->em->flush();
+        return $session;
     }
 
     /**
@@ -70,7 +90,16 @@ class SessionsResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
+        $session = $this->repository->find($id);
+        $properties = array_keys(get_object_vars($data));
+        foreach ($properties as $property) {
+            $setterName = 'set'.ucfirst($property);
+            if (method_exists($session, $setterName)) {
+                $session->$setterName($data->$property);
+            }
+        }
+        $this->em->flush();
+        return new ViewModel();
     }
 
     /**

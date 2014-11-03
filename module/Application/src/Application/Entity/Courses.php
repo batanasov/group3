@@ -46,9 +46,9 @@ class Courses implements JsonSerializable
     /**
      * @var integer
      *
-     * @ORM\Column(name="limit", type="integer", nullable=false)
+     * @ORM\Column(name="`limit`", type="integer", nullable=false)
      */
-    private $limit = '15';
+    private $limit = 15;
     
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -126,7 +126,7 @@ class Courses implements JsonSerializable
      */
     public function setPrice($price)
     {
-        $this->price = $price;
+        $this->price = floatval($price);
 
         return $this;
     }
@@ -149,7 +149,7 @@ class Courses implements JsonSerializable
      */
     public function setLimit($limit)
     {
-        $this->limit = $limit;
+        $this->limit = intval($limit);
 
         return $this;
     }

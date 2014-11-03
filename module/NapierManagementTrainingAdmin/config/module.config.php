@@ -300,4 +300,74 @@ return array(
             ),
         ),
     ),
+    'zf-content-validation' => array(
+        'NapierManagementTrainingAdmin\\V1\\Rest\\News\\Controller' => array(
+            'input_filter' => 'NapierManagementTrainingAdmin\\V1\\Rest\\News\\Validator',
+        ),
+        'NapierManagementTrainingAdmin\\V1\\Rest\\Courses\\Controller' => array(
+            'input_filter' => 'NapierManagementTrainingAdmin\\V1\\Rest\\Courses\\Validator',
+        ),
+    ),
+    'input_filter_specs' => array(
+        'NapierManagementTrainingAdmin\\V1\\Rest\\News\\Validator' => array(
+            0 => array(
+                'name' => 'title',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+                'description' => 'News title',
+                'error_message' => 'Title is required',
+                'allow_empty' => false,
+                'continue_if_empty' => false,
+            ),
+            1 => array(
+                'name' => 'content',
+                'required' => false,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => true,
+                'continue_if_empty' => true,
+            ),
+        ),
+        'NapierManagementTrainingAdmin\\V1\\Rest\\Courses\\Validator' => array(
+            0 => array(
+                'name' => 'title',
+                'required' => true,
+                'filters' => array(),
+                'validators' => array(),
+            ),
+            1 => array(
+                'name' => 'price',
+                'required' => true,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\Int',
+                        'options' => array(),
+                    ),
+                ),
+                'validators' => array(),
+            ),
+            2 => array(
+                'name' => 'description',
+                'required' => false,
+                'filters' => array(),
+                'validators' => array(),
+                'allow_empty' => true,
+                'continue_if_empty' => true,
+            ),
+            3 => array(
+                'name' => 'limit',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\Int',
+                        'options' => array(),
+                    ),
+                ),
+                'validators' => array(),
+                'allow_empty' => true,
+                'continue_if_empty' => true,
+            ),
+        ),
+    ),
 );
