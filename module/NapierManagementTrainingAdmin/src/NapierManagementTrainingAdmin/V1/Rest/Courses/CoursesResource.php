@@ -81,6 +81,19 @@ class CoursesResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
+        if(isset($params->venue)) {
+            $courses = $this->repository->findAll();
+            return array_values(array_filter(array_map(
+                function ($course) use ($params) {
+                    foreach ($course->getSessions() as $session) {
+                        if($session->getVenue()->getId() == $params->venue) {
+                            return $course;
+                        }
+                    }
+                },
+                $courses
+            )));
+        }
         return $this->repository->findAll();
     }
 
